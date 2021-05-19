@@ -1,0 +1,6 @@
+Java is owned by Oracle
+True
+Seattle is the capital city of Washington state
+False
+Alaska is the largest state in the U.S.
+True
