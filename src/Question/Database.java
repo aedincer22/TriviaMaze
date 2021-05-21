@@ -16,16 +16,17 @@ public class Database {
 	private static final Statement DATABASE = createDatabase();
 	private static Database QUESTIONBANK;
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Database db = new Database();
-		
-		System.out.println(db.isEntryAvailable(2,"OneWord"));
-		System.out.println(db.fetch("answer", 2, "MultipleChoice"));
-		//System.out.println(db.fetch("options", 3, "MultipleChoice"));
-		
-
-	}
+	//Test the Database class
+//	public static void main(String[] args) {
+//		// TODO Auto-generated method stub
+//		Database db = new Database();
+//		
+//		System.out.println(db.isEntryAvailable(2,"OneWord"));
+//		System.out.println(db.fetch("answer", 2, "MultipleChoice"));
+//		//System.out.println(db.fetch("options", 3, "MultipleChoice"));
+//		
+//
+//	}
 	
 	private Database() {
 		setup();
@@ -40,32 +41,7 @@ public class Database {
 		return QUESTIONBANK;
 	}
 	
-	
-//	private static void addOneWordQuestions() {
-//		int id = 1;
-//	    try {
-//	        File myObj = new File("OneWordQA.txt");
-//	        Scanner myReader = new Scanner(myObj);
-//	        while (myReader.hasNextLine()) {
-//	          String question = myReader.nextLine();
-//	          String answer = myReader.nextLine();
-//	          String query = String.format("(%d, '%s', '%s')", id, question, answer);
-//	          try {
-//				DATABASE.executeUpdate("insert into OneWord values" + query);
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//	          id++;
-//	        }
-//	        
-//	        myReader.close();
-//	      } catch (FileNotFoundException e) {
-//	        System.out.println("An error occurred.");
-//	        e.printStackTrace();
-//	      }
-//	}
-	
+
 	private static void addQuestions(final String fileName, String tableName, boolean optionsNeeded) {
 		
 		int id = 1;
@@ -99,60 +75,6 @@ public class Database {
 	        e.printStackTrace();
 	      }
 	}
-//	
-//	private static void addTrueOrFalseQuestions() {
-//		int id = 1;
-//	    try {
-//	        File myObj = new File("TrueOrFalse.txt");
-//	        Scanner myReader = new Scanner(myObj);
-//	        while (myReader.hasNextLine()) {
-//	          String question = myReader.nextLine();
-//	          String answer = myReader.nextLine();
-//	          String query = String.format("(%d, '%s', '%s')", id, question, answer);
-//	          try {
-//				DATABASE.executeUpdate("insert into TrueOrFalse values" + query);
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//	          id++;
-//	        }
-//	        
-//	        myReader.close();
-//	      } catch (FileNotFoundException e) {
-//	        System.out.println("An error occurred.");
-//	        e.printStackTrace();
-//	      }
-//	}
-	
-	
-//	private static void addMultipleChoiceQuestions() {
-//		int id = 1;
-//	    try {
-//	        File myObj = new File("MultipleChoice.txt");
-//	        Scanner myReader = new Scanner(myObj);
-//	        while (myReader.hasNextLine()) {
-//	          String question = myReader.nextLine();
-//	          String options = myReader.nextLine();
-//	          String answer = myReader.nextLine();
-//	          String query = String.format("(%d, '%s', '%s', '%s')", id, question, options, answer);
-//	          try {
-//				DATABASE.executeUpdate("insert into MultipleChoice values" + query);
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//	          id++;
-//	        }
-//	        
-//	        myReader.close();
-//	      } catch (FileNotFoundException e) {
-//	        System.out.println("An error occurred.");
-//	        e.printStackTrace();
-//	      }
-//	      
-//	}
-	
 	
 	private static void addTables() {
 		try {
@@ -189,9 +111,6 @@ public class Database {
 		addQuestions("TrueOrFalse.txt", "TrueOrFalse", false);
 		addQuestions("OneWordQA.txt", "OneWord", false);
 		addQuestions("MultipleChoice.txt", "MultipleChoice", true);
-		//addOneWordQuestions();
-		//addTrueOrFalseQuestions();
-		//addMultipleChoiceQuestions();
 	}
 
 	public static void close() {

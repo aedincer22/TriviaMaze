@@ -79,22 +79,5 @@ public class TrueOrFalse extends Question{
 		return myAnswer;
 	}
 
-	/**
-	 * Fetch the data from the database(True or False Table) based on the field passed as an argument.
-	 * @param String: field of the record entry in the database
-	 * @return
-	 */
-//	private String queryDatabase(final String field) {
-//		
-//	    String result = "";
-//		try {
-//			final ResultSet rs = Database.QUESTIONBANK.executeQuery
-//					("select " + field + " from TrueOrFalse where id = " + myQuestionID);
-//			result = rs.getString(field);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return result;
-//	}
 	
 }

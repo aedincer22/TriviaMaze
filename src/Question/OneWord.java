@@ -62,18 +62,4 @@ public class OneWord extends Question{
 		return myAnswer;
 	}
 
-	
-//	private String queryDatabase(final String field) {
-//		
-//	    String result = "";
-//		try {
-//			final ResultSet rs = Database.QUESTIONBANK.executeQuery
-//					("select " + field + " from OneWord where id = " + myQuestionID);
-//			result = rs.getString(field);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return result;
-//	}
-		
 }
