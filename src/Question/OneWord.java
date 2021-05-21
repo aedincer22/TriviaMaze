@@ -1,6 +1,4 @@
 package Question;
-import java.sql.*;
-import static Utility.Database.DATABASE;
 public class OneWord extends Question{
 
 	private static int OWQuestionID = 1;
@@ -8,23 +6,11 @@ public class OneWord extends Question{
 	private final String myQuestion;
 	private final String myOption;
 	private final String myAnswer;
+	private Database myQuestionBank;
+
 	
-	//private static Statement DATABASE = setup();
-	
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		
-//		for (int i = 0; i < 5; i++) {
-//			Question q = new OneWord();
-//			System.out.println(q.getMyQuestion());
-//			System.out.println(q.getMyOptions());
-//			System.out.println(q.getMyAnswer());
-//			System.out.println("---------------");
-//		}		
-//		TrueOrFalse.close();
-//		
-//	}
 	public OneWord() {
+		myQuestionBank = Database.getInstance();
 		setMyQuestionID();
 		myQuestion = setMyQuestion();
 		myOption = setMyOption();
@@ -35,11 +21,10 @@ public class OneWord extends Question{
 	private void setMyQuestionID() {
 		
 		try {
-			ResultSet rs = DATABASE.executeQuery("select * from OneWord where id =" + OWQuestionID);
-			if (rs.next() == false) {
+			if (!myQuestionBank.isEntryAvailable(OWQuestionID, "OneWord")) {
 				OWQuestionID = 1;
 			}
-		} catch (SQLException e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
 		myQuestionID = OWQuestionID++;
@@ -51,7 +36,7 @@ public class OneWord extends Question{
 	}
 	
 	private String setMyQuestion() {
-		return queryDatabase("question");
+		return myQuestionBank.fetch("question", myQuestionID, "OneWord");
 	}
 	
 	@Override
@@ -69,7 +54,7 @@ public class OneWord extends Question{
 	}
 	
 	private String setMyAnswer() {
-		return queryDatabase("answer");
+		return myQuestionBank.fetch("answer", myQuestionID, "OneWord");
 	}
 	
 	@Override
@@ -78,17 +63,17 @@ public class OneWord extends Question{
 	}
 
 	
-	private String queryDatabase(final String field) {
-		
-	    String result = "";
-		try {
-			final ResultSet rs = DATABASE.executeQuery
-					("select " + field + " from OneWord where id = " + myQuestionID);
-			result = rs.getString(field);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
+//	private String queryDatabase(final String field) {
+//		
+//	    String result = "";
+//		try {
+//			final ResultSet rs = Database.QUESTIONBANK.executeQuery
+//					("select " + field + " from OneWord where id = " + myQuestionID);
+//			result = rs.getString(field);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return result;
+//	}
 		
 }

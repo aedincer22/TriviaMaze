@@ -1,12 +1,6 @@
 package Question;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Random;
-
-import Utility.Database;
 public abstract class Question {
 	
 	
@@ -28,18 +22,33 @@ public abstract class Question {
 			} else {
 				question = Question.create("OneWord");
 			}
-			System.out.println(question.getMyQuestion());
-			System.out.println(question.getMyOptions());
-			System.out.println(question.getMyAnswer());
+			System.out.println(question);
+			//System.out.println(question.getMyAnswer());
 			System.out.println("_______________");
 		}
 		Question.close();
 		
 	}
 	
+	
+	/**
+	 * Makes a random decision on which type of question needs to be created.
+	 * @return Question
+	 */
+	public static Question createRandomQuestion() {
+		Random rand = new Random();
+		int choice = rand.nextInt(3);
+		String [] choose = {"MultipleChoice", "TrueOrFalse", "OneWord"};
+		return create(choose[choice]);
+	}
+	
+	/**
+	 * Creates a type of question based on the argument passed.
+	 * @param theQuestionType
+	 * @return Question
+	 */
 	public static Question create(final String theQuestionType) {
 		
-
 		final Question question;
 		if (theQuestionType.equals("MultipleChoice")) {
 			question = new MultipleChoice();
@@ -52,17 +61,45 @@ public abstract class Question {
 		}
 		return question;
 	}
+	
+	/**
+	 * Close the Database connection
+	 */
 	public static void close() {
 		Database.close();
 	}
+	
+	/**
+	 *  Get's the ID of the Question.
+	 *  @return QuestionID
+	 **/
 	public abstract int getMyQuestionID();
 	
+	/**
+	 * Get the question of the current Question object. 
+	 * @return String: Question
+	 */
 	public abstract String getMyQuestion();
 	
+	/**
+	 * Get the answer of the current Question object
+	 * @return String: Answer
+	 */
 	public abstract String getMyAnswer();
 	
+	/**
+	 * Get the options of the current Question object 
+	 * @return String: Options
+	 */
 	public abstract String getMyOptions();
 	
-
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		str.append(this.getMyQuestion()).append("\n")
+		.append(this.getMyOptions());
+		
+		return str.toString();
+	}
 	
 }

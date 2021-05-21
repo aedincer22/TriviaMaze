@@ -1,6 +1,4 @@
 package Question;
-import java.sql.*;
-import static Utility.Database.DATABASE;
 public class TrueOrFalse extends Question{
 
 	private static int TFQuestionID = 1;
@@ -8,39 +6,28 @@ public class TrueOrFalse extends Question{
 	private final String myQuestion;
 	private final String myOption;
 	private final String myAnswer;
-	
-	//private static Statement DATABASE = setup();
-	
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		
-//		for (int i = 0; i < 5; i++) {
-//			Question q = new TrueOrFalse();
-//			System.out.println(q.getMyQuestion());
-//			System.out.println(q.getMyOptions());
-//			System.out.println(q.getMyAnswer());
-//			System.out.println("---------------");
-//		}		
-//		TrueOrFalse.close();
-//		
-//	}
+	private final Database myQuestionBank;
+
+	//constructor
 	public TrueOrFalse() {
+		myQuestionBank = Database.getInstance();
 		setMyQuestionID();
 		myQuestion = setMyQuestion();
 		myOption = setMyOption();
 		myAnswer = setMyAnswer();
+		
 	}
 	
-	
+	/**
+	 * Set the Question ID, such that each ID represents a particular entry in the database. 
+	 */
 	private void setMyQuestionID() {
 		
 		try {
-			ResultSet rs = DATABASE.executeQuery("select * from TrueOrFalse where id =" + TFQuestionID);
-			if (rs.next() == false) {
+			if (!myQuestionBank.isEntryAvailable(TFQuestionID, "TrueOrFalse")) {
 				TFQuestionID = 1;
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
 		myQuestionID = TFQuestionID++;
@@ -51,8 +38,13 @@ public class TrueOrFalse extends Question{
 		return myQuestionID;
 	}
 	
+	/**
+	 * Get the question from the database and set it to the current Question object
+	 * @return
+	 */
 	private String setMyQuestion() {
-		return queryDatabase("question");
+		return myQuestionBank.fetch("question", myQuestionID, "TrueOrFalse");
+
 	}
 	
 	@Override
@@ -60,8 +52,12 @@ public class TrueOrFalse extends Question{
 		return myQuestion;
 	}
 
+	/**
+	 * For True or False type of questions there are only two options
+	 * @return String: Options
+	 */
 	private String setMyOption() {
-		return "A. True  B. False";
+		return "True or False";
 	}
 	
 	@Override
@@ -69,8 +65,13 @@ public class TrueOrFalse extends Question{
 		return myOption;
 	}
 	
+	/**
+	 * Get the answer from the database for the Question object.
+	 * @return String: Answer
+	 */
 	private String setMyAnswer() {
-		return queryDatabase("answer");
+		return myQuestionBank.fetch("answer", myQuestionID, "TrueOrFalse");
+
 	}
 	
 	@Override
@@ -78,19 +79,22 @@ public class TrueOrFalse extends Question{
 		return myAnswer;
 	}
 
-	
-	private String queryDatabase(final String field) {
-		
-	    String result = "";
-		try {
-			final ResultSet rs = DATABASE.executeQuery
-					("select " + field + " from TrueOrFalse where id = " + myQuestionID);
-			result = rs.getString(field);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return result;
-	}
+	/**
+	 * Fetch the data from the database(True or False Table) based on the field passed as an argument.
+	 * @param String: field of the record entry in the database
+	 * @return
+	 */
+//	private String queryDatabase(final String field) {
+//		
+//	    String result = "";
+//		try {
+//			final ResultSet rs = Database.QUESTIONBANK.executeQuery
+//					("select " + field + " from TrueOrFalse where id = " + myQuestionID);
+//			result = rs.getString(field);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return result;
+//	}
 	
 }
