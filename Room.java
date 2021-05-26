@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Room {
 
-	final private boolean myDoors [];
+	final public boolean myDoors [];
 	private boolean isLocked;
 	
 	/**
