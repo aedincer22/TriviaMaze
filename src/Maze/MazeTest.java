@@ -1,15 +1,23 @@
+<<<<<<< HEAD:src/Maze/Maze_Test.java
+=======
+/**
+ * 
+ */
+>>>>>>> fd2b9b3a4187a2711c4c7a84ece84e3caf8e01ce:src/Maze/MazeTest.java
 package Maze;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import Maze.Maze;
-import Maze.Room;
+/**
+ * @author Ruchik Chaudhari
+ *
+ */
+class MazeTest {
 
-class Maze_Test {
-	
 	Maze maze = new Maze();
 	Room [][] myRoom;
 
@@ -107,24 +115,25 @@ class Maze_Test {
 		Assertions.assertNotEquals(2, maze.getEastIndex());
 	}
 		
-	@Test
-	public void testGetCurrentRoomMovedSouth() {
-		maze = new Maze(2,2);
-		maze.move('s');
-		Assertions.assertEquals(maze.myRooms[1][0],maze.getCurrentRoom());
-	}
-	
-	@Test
-	public void testGetCurrentRoomMovedEast() {
-		maze = new Maze(2,2);
-		maze.move('e');
-		Assertions.assertEquals(maze.myRooms[0][1],maze.getCurrentRoom());
-	}
-	
-	@Test
-	public void testGetCurrentRoomMovedWrongRoom() {
-		maze = new Maze(2,2);
-		maze.move('s');
-		Assertions.assertNotEquals(maze.myRooms[1][1],maze.getCurrentRoom());
-	}
+//	@Test
+//	public void testGetCurrentRoomMovedSouth() {
+//		maze = new Maze(2,2);
+//		maze.move('s');
+//		Assertions.assertEquals(maze.myRooms[1][0],maze.getCurrentRoom());
+//	}
+//	
+//	@Test
+//	public void testGetCurrentRoomMovedEast() {
+//		maze = new Maze(2,2);
+//		maze.move('e');
+//		Assertions.assertEquals(maze.myRooms[0][1],maze.getCurrentRoom());
+//	}
+//	
+//	@Test
+//	public void testGetCurrentRoomMovedWrongRoom() {
+//		maze = new Maze(2,2);
+//		maze.move('s');
+//		Assertions.assertNotEquals(maze.myRooms[1][1],maze.getCurrentRoom());
+//	}
+
 }
