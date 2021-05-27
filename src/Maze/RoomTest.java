@@ -1,16 +1,20 @@
+/**
+ * 
+ */
 package Maze;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+/**
+ * @author Ruchik Chaudhari
+ *
+ */
+class RoomTest {
 
-import Maze.Room;
-
-class Room_Test {
-	
-	//create setup method
 	Room room;
 
 	@Test
@@ -68,5 +72,5 @@ class Room_Test {
 		assertEquals("[]", nwRoom.toString());
 	}
 
-	
+
 }
