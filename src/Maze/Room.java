@@ -2,11 +2,11 @@ package Maze;
 
 import java.util.Arrays;
 
-public class Room {
+public class Room{
 
 	final public boolean myDoors [];
 	//private boolean isLocked; not using islocked
-	
+	//
 	/**
 	  *This method initializes room, and creates 
 	  *doors corresponding to the doorCount and sets

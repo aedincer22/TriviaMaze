@@ -1,7 +1,7 @@
 package Question;
 
 import java.util.Random;
-public abstract class Question {
+public abstract class Question{
 	
 	
 	//Example on how to use the Question class

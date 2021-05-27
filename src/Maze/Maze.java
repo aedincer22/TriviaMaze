@@ -2,9 +2,9 @@ package Maze;
 
 import java.util.Arrays;
 
-public class Maze {
+public class Maze{
 
-	private Room [][]  myRooms;
+	public Room [][]  myRooms;
 	private int southIndex;
 	private int eastIndex;
 	public static void main(String[] args) {

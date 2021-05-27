@@ -1,4 +1,4 @@
-package Test;
+package Maze;
 
 import static org.junit.Assert.*;
 
@@ -32,12 +32,6 @@ class Maze_Test {
 		Assertions.assertEquals(4, rows);
 	}
 
-//	@Test
-//	public void testBuildMaze() {
-//		int rows = 4;
-//		int cols = 4;	
-//		Assertions.assertEquals(maze.myRooms[3][3], maze.buildMaze(rows, cols));
-//	}
 	
 	@Test
 	public void testIsNotLastRoom() {

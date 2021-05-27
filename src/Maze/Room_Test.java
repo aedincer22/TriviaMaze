@@ -1,4 +1,4 @@
-package Test;
+package Maze;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -25,12 +25,12 @@ class Room_Test {
 		Assertions.assertNotEquals(2, doorCount);
 	}
 	
-//	@Test(expected = IllegalArgumentException.class)
-//	public void testIllegalArgumentException() {
-//	    int doorCount = -1;
-//	    ;
+//	@Test  
+//	public void testIllegalArgumentChair() {
+//	    Room rm = new Room(-1);
+//	    Assertions.assertThrows(IllegalArgumentException.class, rm);
 //	}
-	
+//	
 	
 	@Test
 	public void testLockDoor() {
