@@ -1,10 +1,12 @@
 package Maze;
 
 import java.util.Arrays;
+import java.util.*;
 
 public class Room {
+	
 
-	final public boolean myDoors [];
+	final private Map<Character, Boolean> myDoors;
 	//private boolean isLocked; not using islocked
 	
 	/**
@@ -13,55 +15,75 @@ public class Room {
 	  *the isLocked value to false
 	  * @param theDoorCount is an integer value that used to setup rooms
 	  */
-	public Room(final int theDoorCount) {
+	public Room(final char [] theDoors) {
+		Objects.requireNonNull(theDoors);
+		myDoors = buildRoom(theDoors);
+	}
+	
+	private Map<Character, Boolean> buildRoom(final char[] theDoors){
 		
-		if (theDoorCount > 2 || theDoorCount < 0) {
-			throw new IllegalArgumentException("The room can have 0 to 2 doors.");
+		//set all the doors to false  
+		Map<Character, Boolean> doors = new HashMap<>();
+		for (final char ch : theDoors) {
+			doors.put(ch, false);
 		}
-		myDoors = new boolean [theDoorCount];
-		Arrays.fill(myDoors, true);
-	//	isLocked = false;is locked 
-	}
-	/**
-	  *This method sets the door value 
-	  *from true(open) to false(locked)
-	  *and updates the location of the current door
-	  */	
-	public void lockDoor() {
-		//Shut down one door in the room
-		int index = 0;
-		for (boolean door : myDoors) {
-			if (door) {
-				myDoors[index] = false;
-				break;
-			}
-			index++;
-		}
+		return doors;
 	}
 	
 	/**
-	  *This method check to see if 
-	  *any doors are still open if not
-	  *returns a boolean value and used to end game.
-	  * @return boolean true if there is still door opens or false if no doors are open
-	  */
+	 * Delete the door from the room.
+	 */	
+	public void deleteDoor(final char ch) {
+		myDoors.remove(ch);
+	}
+	
+	/**
+	 * 
+	 */
 	public boolean isLocked() {
-		//if all doors are false (meaning they are not open) then room is locked
-		for (boolean door : myDoors) {
-			if (door) {
-				return false;
-			}
-		}
-		return true;
+		//if no door are available then the room is locked
+		return myDoors.size() == 0;
 	}
 	
 	/**
-	  *This method creates a string for the array
-	  *of rooms to be display
+	 * 
+	 * @param ch
+	 */
+	public void openDoor(final char ch) {
+		
+		if (myDoors.containsKey(ch)) {
+			myDoors.put(ch, true);
+		} 
+	}
+	
+	public boolean isSolved() {
+		for (char ch : myDoors.keySet()) {
+			if (myDoors.get(ch) == true) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Set<Character> getAvailableDoors() {
+		return myDoors.keySet();
+	}
+	
+	public boolean isDoorOpen(char ch) {
+		if (myDoors.containsKey(ch)) {
+			return myDoors.get(ch);
+		} else {
+			return false;
+		}
+		
+	}
+	
+	/**
+	  *This method creates a string of rooms to be display
 	  * @return String of array display of rooms
 	  */
 	public String toString() {
-		return Arrays.toString(myDoors);
+		return myDoors.toString();
 	}
 	
 
