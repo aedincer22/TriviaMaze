@@ -1,6 +1,9 @@
-package Maze;
+package UserInterface;
 import Question.Question;
 import java.util.HashSet;
+
+import Maze.Maze;
+
 import java.util.*;
 
 public class Test {
@@ -13,15 +16,13 @@ public class Test {
 		//DO some ground work before the game
 		
 		//User chooses to play the game
-		
 		Maze maze = new Maze();
-		displayMaze(maze.getDisplayMaze());
-		
-		while (!maze.isLastRoom() && !maze.getCurrentRoom().isLocked()) {
-			Room currRoom = maze.getCurrentRoom();
+		System.out.println(maze);
+		while (!maze.isLastRoom() && !maze.isCurrentRoomLocked()) {
+			//Room currRoom = maze.getCurrentRoom();
 			char userSelection = getUserChoice(maze);
 			if (userSelection == 'Q') break;
-			if (!currRoom.isDoorOpen(userSelection)) {
+			if (!maze.isCurrentRoomDoorOpen(userSelection)) {
 				//ask a question and compare answers
 				Question question = Question.createRandomQuestion();
 				System.out.println(question);
@@ -33,13 +34,13 @@ public class Test {
 					maze.openDoors(userSelection);
 					maze.move(userSelection);
 				} else {
-					currRoom.deleteDoor(userSelection);
+					maze.deleteCurrentRoomDoor(userSelection);
 				}
 				
 			} else {
 				maze.move(userSelection);
 			}
-			displayMaze(maze.getDisplayMaze());
+			System.out.println(maze);
 		}
 		Question.close();
 		if(maze.isLastRoom()) {
@@ -92,7 +93,7 @@ public class Test {
 				+ maze.getColIndex()+" column." );
 		
 		System.out.println("Please select one of the given door(s):");
-		Set<Character> availableChoices = maze.getCurrentRoom().getAvailableDoors();
+		Set<Character> availableChoices = maze.getCurrentAvailableDoors();
 		System.out.println(availableChoices);
 		
 		//get a valid input from the user
@@ -112,11 +113,11 @@ public class Test {
 //		if (maze.canMoveSouth()) availableChoices.put('s', "Press 'S' for Door-South");
 //		return availableChoices;
 //	}
-	
-	public static void displayMaze(char [][] displayMaze) {
-		
-		for (char [] ch : displayMaze) {
-			System.out.println(Arrays.toString(ch));
-		}
-	}
+//	
+//	public static void displayMaze(char [][] displayMaze) {
+//		
+//		for (char [] ch : displayMaze) {
+//			System.out.println(Arrays.toString(ch));
+//		}
+//	}
 }
