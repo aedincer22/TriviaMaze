@@ -1,9 +1,11 @@
 package Maze;
 
+import java.io.Serializable;
 import java.util.*;
 
-class Room {
+class Room implements Serializable{
 	
+	private static final long serialVersionUID = 1l;
 	/**
 	 * Doors in the room, where each door is labeled
 	 * with it's direction and a boolean value attached
