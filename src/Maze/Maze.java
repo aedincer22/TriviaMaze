@@ -1,9 +1,15 @@
 package Maze;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Maze {
+public class Maze implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Room array which holds all the rooms in the maze.
 	 */
