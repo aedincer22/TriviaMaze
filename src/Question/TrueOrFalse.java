@@ -4,7 +4,7 @@ import java.util.*;
 
 public class TrueOrFalse extends Question{
 
-	private static int TFQuestionID = 1;
+	private static int TFQuestionID = 0;
 	private static final Database DATABASE = Database.getInstance();
 	private static final List<String> TRUEORFALSE_QUESTIONS = DATABASE.getTrueOrFalseQuestions();
 	private static final List<String> TRUEORFALSE_ANSWERS = DATABASE.getTrueOrFalseAnswers();
@@ -13,6 +13,23 @@ public class TrueOrFalse extends Question{
 	private final String myOption;
 	private final String myAnswer;
 	
+	public static void main(String [] args) {
+		Question q = new TrueOrFalse();
+		System.out.println(q.getMyQuestionID());
+		System.out.println(q);
+		
+		Question q1 = new TrueOrFalse();
+		System.out.println(q1.getMyQuestionID());
+		System.out.println(q1);
+		
+		Question q2 = new TrueOrFalse();
+		System.out.println(q2.getMyQuestionID());
+		System.out.println(q2);
+		
+		Question q3 = new TrueOrFalse();
+		System.out.println(q3.getMyQuestionID());
+		System.out.println(q3);
+	}
 
 	//constructor
 	public TrueOrFalse() {
@@ -25,7 +42,7 @@ public class TrueOrFalse extends Question{
 
 	private void setMyQuestionID() {
 		if (TFQuestionID == TRUEORFALSE_QUESTIONS.size()) {
-			TFQuestionID = 1;
+			TFQuestionID = 0;
 		}
 		myQuestionID = TFQuestionID++;
 	}

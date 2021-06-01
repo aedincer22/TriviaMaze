@@ -4,7 +4,7 @@ import java.util.*;
 
 public class MultipleChoice extends Question{
 
-	private static int MCQuestionID = 1;
+	private static int MCQuestionID = 0;
 	private static final Database DATABASE =  Database.getInstance();;
 	private static final List<String> MULTIPLECHOICE_QUESTIONS = DATABASE.getMultipleChoiceQuestions();
 	private static final List<String> MULTIPLECHOICE_OPTIONS = DATABASE.getMultipleChoiceOptions();
@@ -26,7 +26,7 @@ public class MultipleChoice extends Question{
 	
 	private void setMyQuestionID() {
 		if (MCQuestionID == MULTIPLECHOICE_QUESTIONS.size()) {
-			MCQuestionID = 1;
+			MCQuestionID = 0;
 		}
 		myQuestionID = MCQuestionID++;
 	}

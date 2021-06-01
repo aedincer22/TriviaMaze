@@ -2,7 +2,7 @@ package Question;
 import java.util.*;
 public class OneWord extends Question{
 
-	private static int OWQuestionID = 1;
+	private static int OWQuestionID = 0;
 	private static final Database DATABASE = Database.getInstance();
 	private static final List<String> ONEWORD_QUESTIONS = DATABASE.getOneWordQuestions(); 
 	private static final List<String> ONEWORD_ANSWERS = DATABASE.getOneWordAnwsers();
@@ -11,7 +11,23 @@ public class OneWord extends Question{
 	private final String myOption;
 	private final String myAnswer;
 	
-
+	public static void main(String [] args) {
+		Question q = new OneWord();
+		System.out.println(q.getMyQuestionID());
+		System.out.println(q);
+		
+		Question q1 = new OneWord();
+		System.out.println(q1.getMyQuestionID());
+		System.out.println(q1);
+		
+		Question q2 = new OneWord();
+		System.out.println(q2.getMyQuestionID());
+		System.out.println(q2);
+		
+		Question q3 = new OneWord();
+		System.out.println(q3.getMyQuestionID());
+		System.out.println(q3);
+	}
 	
 	public OneWord() {
 		setMyQuestionID();
@@ -22,7 +38,7 @@ public class OneWord extends Question{
 	
 	private void setMyQuestionID() {
 		if (OWQuestionID == ONEWORD_QUESTIONS.size()) {
-			OWQuestionID = 1;
+			OWQuestionID = 0;
 		}
 		myQuestionID = OWQuestionID++;
 	}
