@@ -24,7 +24,9 @@ public class Test implements Serializable{
 		//DO some ground work before the game
 		
 		//User chooses to play the game
-		startGame();
+		//startGame();
+		Question q = Question.create("MultipleChoice");
+		System.out.println(q);
 		
 	}
 	

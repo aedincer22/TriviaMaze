@@ -5,6 +5,10 @@ import java.util.*;
 
 public class Maze implements Serializable {
 	
+	public static void main(String[]args) {
+		Room r = new Room(new char[] {'c','d'});
+		System.out.println(r);
+	}
 	/**
 	 * 
 	 */
