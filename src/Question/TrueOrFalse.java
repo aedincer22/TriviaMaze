@@ -1,38 +1,34 @@
 package Question;
+
+import java.util.*;
+
 public class TrueOrFalse extends Question{
 
 	private static int TFQuestionID = 1;
+	private static final Database DATABASE = Database.getInstance();
+	private static final List<String> TRUEORFALSE_QUESTIONS = DATABASE.getTrueOrFalseQuestions();
+	private static final List<String> TRUEORFALSE_ANSWERS = DATABASE.getTrueOrFalseAnswers();
 	private int myQuestionID; 
 	private final String myQuestion;
 	private final String myOption;
 	private final String myAnswer;
-	private final Database myQuestionBank;
+	
 
 	//constructor
 	public TrueOrFalse() {
-		myQuestionBank = Database.getInstance();
 		setMyQuestionID();
 		myQuestion = setMyQuestion();
 		myOption = setMyOption();
 		myAnswer = setMyAnswer();
 		
 	}
-	
-	/**
-	 * Set the Question ID, such that each ID represents a particular entry in the database. 
-	 */
+
 	private void setMyQuestionID() {
-		
-		try {
-			if (!myQuestionBank.isEntryAvailable(TFQuestionID, "TrueOrFalse")) {
-				TFQuestionID = 1;
-			}
-		} catch (final Exception e) {
-			e.printStackTrace();
+		if (TFQuestionID == TRUEORFALSE_QUESTIONS.size()) {
+			TFQuestionID = 1;
 		}
 		myQuestionID = TFQuestionID++;
 	}
-	
 	@Override
 	public int getMyQuestionID() {
 		return myQuestionID;
@@ -43,7 +39,7 @@ public class TrueOrFalse extends Question{
 	 * @return
 	 */
 	private String setMyQuestion() {
-		return myQuestionBank.fetch("question", myQuestionID, "TrueOrFalse");
+		return TRUEORFALSE_QUESTIONS.get(myQuestionID);
 
 	}
 	
@@ -70,7 +66,7 @@ public class TrueOrFalse extends Question{
 	 * @return String: Answer
 	 */
 	private String setMyAnswer() {
-		return myQuestionBank.fetch("answer", myQuestionID, "TrueOrFalse");
+		return TRUEORFALSE_ANSWERS.get(myQuestionID);
 
 	}
 	

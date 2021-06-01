@@ -6,27 +6,11 @@ public abstract class Question {
 	
 	//Example on how to use the Question class
 	public static void main(String [] args) {
-		int choice = 0;
 		
 		
 		for (int i = 0; i < 16; i++) {
-			Random rand = new Random();
-			choice = rand.nextInt(3);
-			
-			//Based on some conditions we need to create different type of questions
-			Question question;
-			if (choice ==  0) {
-				question = Question.create("MultipleChoice");
-			} else if (choice == 1) {
-				question = Question.create("TrueOrFalse");
-			} else {
-				question = Question.create("OneWord");
-			}
-			System.out.println(question);
-			//System.out.println(question.getMyAnswer());
-			System.out.println("_______________");
+			System.out.println(createRandomQuestion());
 		}
-		Question.close();
 		
 	}
 	

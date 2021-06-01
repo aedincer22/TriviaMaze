@@ -1,42 +1,38 @@
 package Question;
+import java.util.*;
 public class OneWord extends Question{
 
 	private static int OWQuestionID = 1;
+	private static final Database DATABASE = Database.getInstance();
+	private static final List<String> ONEWORD_QUESTIONS = DATABASE.getOneWordQuestions(); 
+	private static final List<String> ONEWORD_ANSWERS = DATABASE.getOneWordAnwsers();
 	private int myQuestionID; 
 	private final String myQuestion;
 	private final String myOption;
 	private final String myAnswer;
-	private Database myQuestionBank;
+	
 
 	
 	public OneWord() {
-		myQuestionBank = Database.getInstance();
 		setMyQuestionID();
 		myQuestion = setMyQuestion();
 		myOption = setMyOption();
 		myAnswer = setMyAnswer();
 	}
 	
-	
 	private void setMyQuestionID() {
-		
-		try {
-			if (!myQuestionBank.isEntryAvailable(OWQuestionID, "OneWord")) {
-				OWQuestionID = 1;
-			}
-		} catch (final Exception e) {
-			e.printStackTrace();
+		if (OWQuestionID == ONEWORD_QUESTIONS.size()) {
+			OWQuestionID = 1;
 		}
 		myQuestionID = OWQuestionID++;
 	}
-	
 	@Override
 	public int getMyQuestionID() {
 		return myQuestionID;
 	}
 	
 	private String setMyQuestion() {
-		return myQuestionBank.fetch("question", myQuestionID, "OneWord");
+		return ONEWORD_QUESTIONS.get(myQuestionID);
 	}
 	
 	@Override
@@ -54,7 +50,7 @@ public class OneWord extends Question{
 	}
 	
 	private String setMyAnswer() {
-		return myQuestionBank.fetch("answer", myQuestionID, "OneWord");
+		return ONEWORD_ANSWERS.get(myQuestionID);
 	}
 	
 	@Override
