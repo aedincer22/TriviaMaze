@@ -28,41 +28,6 @@ public class Test implements Serializable{
 		startGame();
 
 		
-//		outer:while (!maze.isLastRoom()) {
-//			displayMaze(maze.getDisplayMaze());
-//			Room currRoom = maze.getCurrentRoom();
-//			Map<Character, String> availableDoorChoices = getCurrentDoorChoices(maze);
-//			char userChoice = getUserChoice(availableDoorChoices, maze);
-//			if (userChoice == 'q') break;
-//			
-//			while (!currRoom.isLocked()) {
-//				Question q = Question.createRandomQuestion();
-//				System.out.println(q);
-//				System.out.println(q.getMyAnswer());
-//				String userAns = sc.next().toLowerCase();
-//				if (userAns.equals(q.getMyAnswer().toLowerCase())) {
-//					System.out.println("Correct answer!");
-//					maze.move(userChoice);
-//					break;
-//				} else {
-//					System.out.println("Wrong answer!");
-//					currRoom.lockDoor();
-//					availableDoorChoices.remove(userChoice);
-//					if (!availableDoorChoices.isEmpty())
-//						userChoice = getUserChoice(availableDoorChoices, maze);
-//					if (userChoice == 'q') break outer;
-//				}
-//			}
-//			System.out.println();
-//			if (currRoom.isLocked()) break;
-//		}
-//		displayMaze(maze.getDisplayMaze());
-//		if (maze.isLastRoom()) { 
-//			System.out.println("You won");	
-//		}else { 
-//			System.out.println("you lost");
-//		}
-//		Question.close();
 	}
 	
 	public static char getUserChoice(Maze maze) {

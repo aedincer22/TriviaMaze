@@ -1,38 +1,51 @@
 package Question;
+
+import java.util.*;
+
 public class TrueOrFalse extends Question{
 
-	private static int TFQuestionID = 1;
+	private static int TFQuestionID = 0;
+	private static final Database DATABASE = Database.getInstance();
+	private static final List<String> TRUEORFALSE_QUESTIONS = DATABASE.getTrueOrFalseQuestions();
+	private static final List<String> TRUEORFALSE_ANSWERS = DATABASE.getTrueOrFalseAnswers();
 	private int myQuestionID; 
 	private final String myQuestion;
 	private final String myOption;
 	private final String myAnswer;
-	private final Database myQuestionBank;
+	
+	public static void main(String [] args) {
+		Question q = new TrueOrFalse();
+		System.out.println(q.getMyQuestionID());
+		System.out.println(q);
+		
+		Question q1 = new TrueOrFalse();
+		System.out.println(q1.getMyQuestionID());
+		System.out.println(q1);
+		
+		Question q2 = new TrueOrFalse();
+		System.out.println(q2.getMyQuestionID());
+		System.out.println(q2);
+		
+		Question q3 = new TrueOrFalse();
+		System.out.println(q3.getMyQuestionID());
+		System.out.println(q3);
+	}
 
 	//constructor
 	public TrueOrFalse() {
-		myQuestionBank = Database.getInstance();
 		setMyQuestionID();
 		myQuestion = setMyQuestion();
 		myOption = setMyOption();
 		myAnswer = setMyAnswer();
 		
 	}
-	
-	/**
-	 * Set the Question ID, such that each ID represents a particular entry in the database. 
-	 */
+
 	private void setMyQuestionID() {
-		
-		try {
-			if (!myQuestionBank.isEntryAvailable(TFQuestionID, "TrueOrFalse")) {
-				TFQuestionID = 1;
-			}
-		} catch (final Exception e) {
-			e.printStackTrace();
+		if (TFQuestionID == TRUEORFALSE_QUESTIONS.size()) {
+			TFQuestionID = 0;
 		}
 		myQuestionID = TFQuestionID++;
 	}
-	
 	@Override
 	public int getMyQuestionID() {
 		return myQuestionID;
@@ -43,7 +56,7 @@ public class TrueOrFalse extends Question{
 	 * @return
 	 */
 	private String setMyQuestion() {
-		return myQuestionBank.fetch("question", myQuestionID, "TrueOrFalse");
+		return TRUEORFALSE_QUESTIONS.get(myQuestionID);
 
 	}
 	
@@ -70,7 +83,7 @@ public class TrueOrFalse extends Question{
 	 * @return String: Answer
 	 */
 	private String setMyAnswer() {
-		return myQuestionBank.fetch("answer", myQuestionID, "TrueOrFalse");
+		return TRUEORFALSE_ANSWERS.get(myQuestionID);
 
 	}
 	

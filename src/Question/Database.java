@@ -15,21 +15,36 @@ public class Database {
 
 	private static final Statement DATABASE = createDatabase();
 	private static Database QUESTIONBANK;
+	private static List<String>MULTIPLECHOICE_QUESTIONS;
+	private static List<String>MULTIPLECHOICE_OPTIONS;
+	private static List<String>MULTIPLECHOICE_ANSWERS;
+	private static List<String>ONEWORD_QUESTIONS;
+	private static List<String>ONEWORD_ANSWERS;
+	private static List<String>TRUEORFALSE_QUESTIONS;
+	private static List<String>TRUEORFALSE_ANSWERS;
 	
-	//Test the Database class
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		Database db = new Database();
-//		
-//		System.out.println(db.isEntryAvailable(2,"OneWord"));
-//		System.out.println(db.fetch("answer", 2, "MultipleChoice"));
-//		//System.out.println(db.fetch("options", 3, "MultipleChoice"));
-//		
-//
-//	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Database db = new Database();
+		System.out.println(db.getOneWordQuestions());
+		System.out.println(db.getOneWordAnwsers());
+		System.out.println(db.getTrueOrFalseQuestions());
+		System.out.println(db.getTrueOrFalseAnswers());
+		//System.out.println(MULTIPLECHOICE_QUESTIONS);
+		
+	}
 	
 	private Database() {
 		setup();
+		int index = 1;
+		MULTIPLECHOICE_QUESTIONS = setList(index, "MultipleChoice", "question");
+		MULTIPLECHOICE_OPTIONS = setList(index, "MultipleChoice","option");
+		MULTIPLECHOICE_ANSWERS = setList(index, "MultipleChoice","answer");
+		ONEWORD_QUESTIONS = setList(index, "OneWord","question");
+		ONEWORD_ANSWERS = setList(index, "OneWord","answer");
+		TRUEORFALSE_QUESTIONS = setList(index, "TrueOrFalse", "question");
+		TRUEORFALSE_ANSWERS = setList(index, "TrueOrFalse", "answer");
+		close();
 	}
 	
 	public static Database getInstance() {
@@ -42,6 +57,35 @@ public class Database {
 	}
 	
 
+	public List<String> getMultipleChoiceQuestions(){
+		return MULTIPLECHOICE_QUESTIONS;
+	}
+	
+	public List<String> getMultipleChoiceOptions(){
+		return MULTIPLECHOICE_OPTIONS;
+	}
+	
+	public List<String> getMultipleChoiceAnswers(){
+		return MULTIPLECHOICE_ANSWERS;
+	}
+	
+	public List<String> getOneWordQuestions(){
+		return ONEWORD_QUESTIONS;
+	}
+	
+	public List<String> getOneWordAnwsers(){
+		return ONEWORD_ANSWERS;
+	}
+	
+	public List<String> getTrueOrFalseQuestions(){
+		return TRUEORFALSE_QUESTIONS;
+	}
+	
+	public List<String> getTrueOrFalseAnswers(){
+		return TRUEORFALSE_ANSWERS;
+	}
+	
+	
 	private static void addQuestions(final String fileName, String tableName, boolean optionsNeeded) {
 		
 		int id = 1;
@@ -76,12 +120,21 @@ public class Database {
 	      }
 	}
 	
+	private List<String> setList(int id, final String tableName, final String field){
+		
+		List<String> list = new ArrayList<>();
+		while (isEntryAvailable(id, tableName)) {
+			list.add(fetch(field, id, tableName));
+			id++;
+		}
+		return list;
+	}
 	private static void addTables() {
 		try {
 			DATABASE.executeUpdate("drop table if exists OneWord");
 			DATABASE.executeUpdate("create table OneWord (id integer, question string, answer string)");
 			DATABASE.executeUpdate("drop table if exists MultipleChoice");
-			DATABASE.executeUpdate("create table MultipleChoice (id integer, question string, options string, answer string)");
+			DATABASE.executeUpdate("create table MultipleChoice (id integer, question string, option string, answer string)");
 			DATABASE.executeUpdate("drop table if exists TrueOrFalse");
 			DATABASE.executeUpdate("create table TrueOrFalse (id integer, question string, answer string)");
 		} catch (SQLException e) {
