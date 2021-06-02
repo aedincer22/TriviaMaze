@@ -85,8 +85,36 @@ public class Test implements Serializable{
 				if (userAnswer.equals(question.getMyAnswer().toLowerCase())) {
 					maze.openDoors(userSelection);
 					maze.move(userSelection);
+					try
+			        {
+			            String filePath =  "Correct-answer.wav";
+			            SimpleAudioPlayer audioPlayer = new SimpleAudioPlayer(filePath);
+			              
+			            audioPlayer.play();
+			            audioPlayer.stop();
+			        }
+			            catch (Exception ex) 
+			            {
+			                System.out.println("Error with playing sound.");
+			                ex.printStackTrace();
+			              
+			              }
+					
 				} else {
 					maze.deleteCurrentRoomDoor(userSelection);
+					try
+			        {
+			            String filePath =  "Wrong-answer-sound-effect.wav";
+			            SimpleAudioPlayer audioPlayer = new SimpleAudioPlayer(filePath);
+			              
+			            audioPlayer.play();
+			        }
+			            catch (Exception ex) 
+			            {
+			                System.out.println("Error with playing sound.");
+			                ex.printStackTrace();
+			              
+			              }
 				}
 				
 			} else {
@@ -98,6 +126,20 @@ public class Test implements Serializable{
 		if(maze.isLastRoom()) {
 			System.out.println("You Won!");
 		} else {
+			
+			try
+	        {
+	            String filePath =  "Sad_Trombone-Joe_Lamb-665429450.wav";
+	            SimpleAudioPlayer audioPlayer = new SimpleAudioPlayer(filePath);
+	              
+	            audioPlayer.play();
+	        }
+	            catch (Exception ex) 
+	            {
+	                System.out.println("Error with playing sound.");
+	                ex.printStackTrace();
+	              
+	              }
 			System.out.println("You Lost!");
 		}
 	}

@@ -48,4 +48,11 @@ public class SimpleAudioPlayer
        
      status = "play";
  }
+ public void stop() throws UnsupportedAudioFileException,
+ IOException, LineUnavailableException 
+ {
+     currentFrame = 0L;
+     clip.stop();
+     clip.close();
+ }
 }
