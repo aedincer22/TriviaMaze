@@ -4,7 +4,16 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Maze implements Serializable {
+<<<<<<< HEAD
+=======
 	
+	private static final long serialVersionUID = 1l;
+>>>>>>> branchByRuchik
+	
+	public static void main(String[]args) {
+		Room r = new Room(new char[] {'c','d'});
+		System.out.println(r);
+	}
 	/**
 	 * 
 	 */
@@ -214,8 +223,18 @@ public class Maze implements Serializable {
 	 * Delete the given door in the current room.
 	 * @param ch: Door name
 	 */
-	public void deleteCurrentRoomDoor(char ch) {
-		 myRooms[myRowIndex][myColIndex].deleteDoor(ch);
+	public void deleteCurrentRoomDoor(char theChar) {
+		 myRooms[myRowIndex][myColIndex].deleteDoor(theChar);
+		 
+			if (theChar == 'W') {
+				myRooms[myRowIndex][myColIndex - 1].deleteDoor('E');
+			} else if (theChar == 'S') {
+				myRooms[myRowIndex + 1][myColIndex].deleteDoor('N');
+			} else if (theChar == 'E') {
+				myRooms[myRowIndex][myColIndex + 1].deleteDoor('W');
+			} else if (theChar == 'N') {
+				myRooms[myRowIndex - 1][myColIndex].deleteDoor('S');
+			}
 	}
 	
 	/**
