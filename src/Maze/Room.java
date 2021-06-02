@@ -5,11 +5,15 @@ import java.util.*;
 
 class Room implements Serializable{
 	
+<<<<<<< HEAD
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+=======
+	private static final long serialVersionUID = 1l;
+>>>>>>> branchByRuchik
 	/**
 	 * Doors in the room, where each door is labeled
 	 * with it's direction and a boolean value attached
