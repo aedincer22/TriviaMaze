@@ -1,0 +1,50 @@
+Mount Everest is the highest peak in the world.
+True
+Seattle is the capital city of Washington state.
+False
+Alaska is the largest state in the U.S.
+True
+Maine is the northernmost community of New England.
+True
+Russian Federation has the highest population in Europe.
+True
+Namib desert is the driest place on the planet.
+False
+Africa is formerly known as Alkebulan.
+True
+The Lake Rudolf is situated in Norway.
+Flase
+Gunnbjorn is the highest point of Greenland Island.
+True
+The Lake Rudolf is situated in Kenya.
+True
+Central America has spot more than 125 miles for the ocean.
+False
+Laguna Salada is the lowest geographical point of Mexico.
+True
+The Lake Texcoco situated in U.S.
+False
+The meaning of the word “Canada” is Indian Village.
+True
+Hells Canyon is the deepest Gorge of the world.
+True
+The Mount Kilimanjaro situated in Canada.
+False
+There are 7 countries included in South Asia.
+True
+The Arica desert situated in China.
+Flase
+The average temperature of Plateau Station is -56.7C.
+True
+The highest lake level in the world is Titicaca.
+True
+The world’s most southernmost city is Ushuaia.
+False
+Mississippi-Missouri River System is the longest river system of North America.
+True
+The Big Island is situated in Hawaii.
+True
+16 U.S. states are landlocked.
+True
+There are more than 4 states have a border with Mexico.
+False
