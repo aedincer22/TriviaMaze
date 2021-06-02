@@ -2,6 +2,7 @@ package UserInterface;
 import Question.Question;
 import Maze.Maze;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,6 +25,19 @@ public class Test implements Serializable{
 		//DO some ground work before the game
 		
 		//User chooses to play the game
+		 try
+	        {
+	            String filePath =  "Jeopardy-theme-song.wav";
+	            SimpleAudioPlayer audioPlayer = new SimpleAudioPlayer(filePath);
+	              
+	            audioPlayer.play();
+	        }
+	            catch (Exception ex) 
+	            {
+	                System.out.println("Error with playing sound.");
+	                ex.printStackTrace();
+	              
+	              }
 		startGame();
 		
 	}
@@ -40,7 +54,9 @@ public class Test implements Serializable{
 		
 		//get a valid input from the user
 		char userChoice = Character.toUpperCase(sc.next().charAt(0));
-		while (userChoice != 'Q' && !availableChoices.contains(userChoice)) {
+		
+
+		while (userChoice != 'Q' && !availableChoices.contains(userChoice) && userChoice != '*') {
 			System.out.println("Invalid Input, please try again or press 'Q' to Quit");
 			System.out.println("Please select one of the given door(s):");
 			System.out.println(availableChoices);
@@ -52,11 +68,12 @@ public class Test implements Serializable{
 	public static void newGame(Maze maze) {
 		//Maze maze = new Maze();
 		System.out.println(maze);
-		String response;
 		while (!maze.isLastRoom() && !maze.isCurrentRoomLocked()) {
-			//Room currRoom = maze.getCurrentRoom();
 			char userSelection = getUserChoice(maze);
 			if (userSelection == 'Q') break;
+			if(userSelection == '*' ) {
+				if(menu(maze) == false) break;
+			}
 			if (!maze.isCurrentRoomDoorOpen(userSelection)) {
 				//ask a question and compare answers
 				Question question = Question.createRandomQuestion();
@@ -68,9 +85,6 @@ public class Test implements Serializable{
 				if (userAnswer.equals(question.getMyAnswer().toLowerCase())) {
 					maze.openDoors(userSelection);
 					maze.move(userSelection);
-					System.out.println("Progress has bee made, would you like to save Game?");
-					response = sc.next();
-					if(response.equals("yes")) saveGame(maze);
 				} else {
 					maze.deleteCurrentRoomDoor(userSelection);
 				}
@@ -90,6 +104,7 @@ public class Test implements Serializable{
 
 		public static void startGame() {
 		System.out.println("Welcome User to the TRIVIA MAZE!");
+		System.out.println("Press '*' for menu screen in Game");
 		System.out.println();
 		System.out.println("Please select an option: ");
 		System.out.println(" New Game (select 1)      Load Game (select 2)      Help Screen (select 3)");
@@ -152,6 +167,31 @@ public class Test implements Serializable{
 		   }
 		  return maze;
 		}
+		
+		public static boolean menu(Maze maze) {
+			int option;
+			System.out.println("Menu Screen");
+			System.out.println("Save Game (1)   return to Start Screen (2)   Exit Game(3)");
+			option = sc.nextInt();
+			while(option != 1 && option != 2 && option != 3 ) {
+				System.out.println("invalid input");
+				System.out.println("Save Game (1)   return to Start Screen (2)   Exit Game(3)");
+				option = sc.nextInt();
+			
+			}	
+			if(option == 1) {
+				saveGame(maze);
+				return true;
+			}
+			else if(option == 2) {
+				startGame();
+				return true;
+			}
+			else if(option == 3) {
+				return false;
+			}
+			return true;
+		}
 
 		public static void help() {
 		System.out.println("Welcome to the Help Screen!");
@@ -169,5 +209,9 @@ public class Test implements Serializable{
 		System.out.println("Every door has random question, continue or save the progress of the game");
 		System.out.println("Make sure to save the game before leaving or your data wont be save :(");
 		System.out.println("//////////////////////////   Cheats   //////////////////////////////");
+		System.out.println(" Cheat 1 --------------------");
+		System.out.println(" Cheat 2 --------------------");
+		System.out.println(" Cheat 3 --------------------");
+
 		}
 }
