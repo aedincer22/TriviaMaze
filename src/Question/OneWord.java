@@ -2,10 +2,11 @@ package Question;
 import java.util.*;
 public class OneWord extends Question{
 
-	private static int OWQuestionID = 0;
 	private static final Database DATABASE = Database.getInstance();
 	private static final List<String> ONEWORD_QUESTIONS = DATABASE.getOneWordQuestions(); 
 	private static final List<String> ONEWORD_ANSWERS = DATABASE.getOneWordAnwsers();
+	private static int OWQuestionID = 0;
+
 	private int myQuestionID; 
 	private final String myQuestion;
 	private final String myOption;
