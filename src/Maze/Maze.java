@@ -4,11 +4,8 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Maze implements Serializable {
-<<<<<<< HEAD
-=======
-	
-	private static final long serialVersionUID = 1l;
->>>>>>> branchByRuchik
+
+
 	
 	public static void main(String[]args) {
 		Room r = new Room(new char[] {'c','d'});

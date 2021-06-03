@@ -40,6 +40,7 @@ public class SimpleAudioPlayer
      clip.open(audioInputStream);
        
      clip.loop(Clip.LOOP_CONTINUOUSLY);
+     //clip.stop();
  }
  public void play() 
  {
