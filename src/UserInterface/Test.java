@@ -26,19 +26,19 @@ public class Test implements Serializable{
 		//DO some ground work before the game
 		
 		//User chooses to play the game
-//		 try
-//	        {
-//	            String filePath =  "Jeopardy-theme-song.wav";
-//	            SimpleAudioPlayer audioPlayer = new SimpleAudioPlayer(filePath);
-//	              
-//	            audioPlayer.play();
-//	        }
-//	            catch (Exception ex) 
-//	            {
-//	                System.out.println("Error with playing sound.");
-//	                ex.printStackTrace();
-//	              
-//	              }
+		 try
+	        {
+	            String filePath =  "Jeopardy-theme-song.wav";
+	            SimpleAudioPlayer audioPlayer = new SimpleAudioPlayer(filePath);
+	              
+	            audioPlayer.play();
+	        }
+	            catch (Exception ex) 
+	            {
+	                System.out.println("Error with playing sound.");
+	                ex.printStackTrace();
+	              
+	              }
 		startGame();
 		
 	}
@@ -74,7 +74,10 @@ public class Test implements Serializable{
 			if (userSelection == 'Q') break;
 			if(userSelection == '*' ) {
 				if(menu(maze) == false) break;
+				System.out.println(maze);
+				userSelection = getUserChoice(maze);
 			}
+			
 			if(userSelection == 'C') cheats(maze);
 			if (!maze.isCurrentRoomDoorOpen(userSelection)) {
 				//ask a question and compare answers
@@ -125,20 +128,20 @@ public class Test implements Serializable{
 		System.out.println();
 		System.out.println("Please select an option: ");
 		System.out.println(" New Game (select 1)      Load Game (select 2)      Help Screen (select 3)");
-		int answer = sc.nextInt();
+		String answer = sc.next();
 
-		if(answer == 1) {
+		if(answer.equals("1")) {
 			//start a new game
 			Maze maze = new Maze();
 			System.out.println("New Game has been selected");
 			newGame(maze);
 		}
-		else if (answer == 2) {
+		else if (answer.equals("2")) {
 			//Load game
 			System.out.println("Loading prevoius Game");
 			newGame(loadGame());
 		}
-		else if(answer == 3) {
+		else if(answer.equals("3")) {
 			//open Help Screen
 			help();
 			startGame();
@@ -186,25 +189,25 @@ public class Test implements Serializable{
 		}
 		
 		public static boolean menu(Maze maze) {
-			int option;
+			String option;
 			System.out.println("Menu Screen");
 			System.out.println("Save Game (1)   return to Start Screen (2)   Exit Game(3)");
-			option = sc.nextInt();
-			while(option != 1 && option != 2 && option != 3 ) {
+			option = sc.next();
+			while(!option.equals("1") && !option.equals("2") && !option.equals("3")) {
 				System.out.println("invalid input");
 				System.out.println("Save Game (1)   return to Start Screen (2)   Exit Game(3)");
-				option = sc.nextInt();
+				option = sc.next();
 			
 			}	
-			if(option == 1) {
+			if(option.equals("1")) {
 				saveGame(maze);
 				return true;
 			}
-			else if(option == 2) {
+			else if(option.equals("2")) {
 				startGame();
 				return true;
 			}
-			else if(option == 3) {
+			else if(option.equals("3")) {
 				return false;
 			}
 			return true;
