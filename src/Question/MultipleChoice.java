@@ -4,11 +4,12 @@ import java.util.*;
 
 public class MultipleChoice extends Question{
 
-	private static int MCQuestionID = 0;
 	private static final Database DATABASE =  Database.getInstance();;
 	private static final List<String> MULTIPLECHOICE_QUESTIONS = DATABASE.getMultipleChoiceQuestions();
 	private static final List<String> MULTIPLECHOICE_OPTIONS = DATABASE.getMultipleChoiceOptions();
 	private static final List<String> MULTIPLECHOICE_ANSWERS = DATABASE.getMultipleChoiceAnswers();
+	private static int MCQuestionID = 0;
+
 	private int myQuestionID; 
 	private final String myQuestion;
 	private final String myOption;

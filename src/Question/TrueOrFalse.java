@@ -4,10 +4,11 @@ import java.util.*;
 
 public class TrueOrFalse extends Question{
 
-	private static int TFQuestionID = 0;
 	private static final Database DATABASE = Database.getInstance();
 	private static final List<String> TRUEORFALSE_QUESTIONS = DATABASE.getTrueOrFalseQuestions();
 	private static final List<String> TRUEORFALSE_ANSWERS = DATABASE.getTrueOrFalseAnswers();
+	private static int TFQuestionID = 0;
+	
 	private int myQuestionID; 
 	private final String myQuestion;
 	private final String myOption;
@@ -46,6 +47,7 @@ public class TrueOrFalse extends Question{
 		}
 		myQuestionID = TFQuestionID++;
 	}
+	
 	@Override
 	public int getMyQuestionID() {
 		return myQuestionID;

@@ -9,50 +9,14 @@ public abstract class Question {
 		
 		
 		for (int i = 0; i < 16; i++) {
-			System.out.println(createRandomQuestion());
+			Question q = QuestionFactory.createRandomQuestion();
+			System.out.println(q);
+			System.out.println(q.getMyAnswer());
 		}
 		
 	}
 	
-	
-	/**
-	 * Makes a random decision on which type of question needs to be created.
-	 * @return Question
-	 */
-	public static Question createRandomQuestion() {
-		Random rand = new Random();
-		int choice = rand.nextInt(3);
-		String [] choose = {"MultipleChoice", "TrueOrFalse", "OneWord"};
-		return create(choose[choice]);
-	}
-	
-	/**
-	 * Creates a type of question based on the argument passed.
-	 * @param theQuestionType
-	 * @return Question
-	 */
-	public static Question create(final String theQuestionType) {
-		
-		final Question question;
-		if (theQuestionType.equals("MultipleChoice")) {
-			question = new MultipleChoice();
-		} else if (theQuestionType.equals("TrueOrFalse")) {
-			question = new TrueOrFalse();
-		} else if (theQuestionType.equals("OneWord")){
-			question = new OneWord();
-		} else {
-			throw new IllegalArgumentException("The type of question asked is invalid");
-		}
-		return question;
-	}
-	
-	/**
-	 * Close the Database connection
-	 */
-	public static void close() {
-		Database.close();
-	}
-	
+
 	/**
 	 *  Get's the ID of the Question.
 	 *  @return QuestionID
@@ -77,9 +41,13 @@ public abstract class Question {
 	 */
 	public abstract String getMyOptions();
 	
+	
+	/**
+	 * @return The string format of Question Class.
+	 */
 	@Override
 	public String toString() {
-		StringBuilder str = new StringBuilder();
+		final StringBuilder str = new StringBuilder();
 		str.append(this.getMyQuestion()).append("\n")
 		.append(this.getMyOptions());
 		
