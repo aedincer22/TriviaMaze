@@ -1,7 +1,11 @@
 package Question;
+import java.util.*;
 
-import java.util.Random;
-public abstract class Question {
+public class Question {
+	
+	private final String myQuestion;
+	private final String myOptions;
+	private final String myAnswer;
 	
 	
 	//Example on how to use the Question class
@@ -11,35 +15,43 @@ public abstract class Question {
 		for (int i = 0; i < 16; i++) {
 			Question q = QuestionFactory.createRandomQuestion();
 			System.out.println(q);
-			System.out.println(q.getMyAnswer());
+			System.out.println(q.getAnswer());
 		}
 		
 	}
 	
-
-	/**
-	 *  Get's the ID of the Question.
-	 *  @return QuestionID
-	 **/
-	public abstract int getMyQuestionID();
+	public Question(final String theQuestion, final String theOptions, final String theAnswer) {
+		Objects.requireNonNull(theQuestion);
+		Objects.requireNonNull(theOptions);
+		Objects.requireNonNull(theAnswer);
+		myQuestion = theQuestion;
+		myOptions = theOptions;
+		myAnswer = theAnswer;
+	}
 	
 	/**
 	 * Get the question of the current Question object. 
 	 * @return String: Question
 	 */
-	public abstract String getMyQuestion();
+	public String getQuestion() {
+		return myQuestion;
+	}
 	
 	/**
 	 * Get the answer of the current Question object
 	 * @return String: Answer
 	 */
-	public abstract String getMyAnswer();
+	public String getAnswer() {
+		return myAnswer;
+	}
 	
 	/**
 	 * Get the options of the current Question object 
 	 * @return String: Options
 	 */
-	public abstract String getMyOptions();
+	public String getOptions() {
+		return myOptions;
+	}
 	
 	
 	/**
@@ -48,8 +60,8 @@ public abstract class Question {
 	@Override
 	public String toString() {
 		final StringBuilder str = new StringBuilder();
-		str.append(this.getMyQuestion()).append("\n")
-		.append(this.getMyOptions());
+		str.append(this.getQuestion()).append("\n")
+		.append(this.getOptions());
 		
 		return str.toString();
 	}

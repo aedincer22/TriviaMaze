@@ -1,5 +1,5 @@
 package UserInterface;
-import Question.Question;
+import Question.*;
 import Maze.Maze;
 
 import java.io.File;
@@ -84,7 +84,7 @@ public class Test implements Serializable{
 			}
 			if (!maze.isCurrentRoomDoorOpen(userSelection)) {
 				//ask a question and compare answers
-				Question question = Question.createRandomQuestion();
+				Question question = QuestionFactory.createRandomQuestion();
 				System.out.println(question);
 				//get the answer
 				System.out.println(question.getMyAnswer());
@@ -103,7 +103,6 @@ public class Test implements Serializable{
 			}
 			System.out.println(maze);
 		}
-		Question.close();
 		if(maze.isLastRoom()) {
 			System.out.println("You Won!");
 		} else {
