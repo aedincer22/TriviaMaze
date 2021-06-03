@@ -138,7 +138,21 @@ public class Maze implements Serializable {
 		displayArr[0][0] = '*';
 		return displayArr;		
 	}
-
+	/**
+     * Moves the user to the given row and column.
+     * @param row
+     * @param col
+     */
+    public void setLocation(final int row, final int col) {
+        final int size = myRooms.length;
+        if (row >= size || col >= size || row < 0 || col < 0) {
+            throw new IllegalArgumentException("Provided invalid row or column.");
+        }
+        myRowIndex = row;
+        myColIndex = col;
+        myDisplayMaze[myRowIndex][myColIndex] = '*';  
+        myDisplayMaze[0][0] = 'X';
+    }
 	/**
 	 * In the maze move towards the direction
 	 * passed in the argument.
@@ -269,6 +283,7 @@ public class Maze implements Serializable {
 		}
 		return str.toString();
 	}
+	
 	
 //	public boolean isNextRoomSolved(char theChar) {
 //	

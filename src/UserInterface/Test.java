@@ -17,7 +17,7 @@ public class Test implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	static Scanner sc  = new Scanner(System.in);
-	
+	static int cheatCounter;
 	
 	//test
 	public static void main(String[] args) {
@@ -67,7 +67,7 @@ public class Test implements Serializable{
 	}
 
 	public static void newGame(Maze maze) {
-		//Maze maze = new Maze();
+		cheatCounter = 0;
 		System.out.println(maze);
 		while (!maze.isLastRoom() && !maze.isCurrentRoomLocked()) {
 			char userSelection = getUserChoice(maze);
@@ -76,9 +76,12 @@ public class Test implements Serializable{
 				if(menu(maze) == false) break;
 				System.out.println(maze);
 				userSelection = getUserChoice(maze);
+			}		
+			if(userSelection == 'C') {
+				cheats(maze);
+				System.out.println(maze);
+				userSelection = getUserChoice(maze);
 			}
-			
-			if(userSelection == 'C') cheats(maze);
 			if (!maze.isCurrentRoomDoorOpen(userSelection)) {
 				//ask a question and compare answers
 				Question question = Question.createRandomQuestion();
@@ -104,20 +107,7 @@ public class Test implements Serializable{
 		if(maze.isLastRoom()) {
 			System.out.println("You Won!");
 		} else {
-			
-			try
-	        {
-	            String filePath =  "Sad_Trombone-Joe_Lamb-665429450.wav";
-	            SimpleAudioPlayer audioPlayer = new SimpleAudioPlayer(filePath);
-	              
-	            audioPlayer.play();
-	        }
-	            catch (Exception ex) 
-	            {
-	                System.out.println("Error with playing sound.");
-	                ex.printStackTrace();
-	              
-	              }
+
 			System.out.println("You Lost!");
 		}
 	}
@@ -216,13 +206,24 @@ public class Test implements Serializable{
 		public static Maze cheats(Maze maze) {
 			System.out.println("Hmmm.... I hear you Something up yourselves?");
 			String cheat = sc.next();
-			if(cheat.equals("^<>^?")) {
-				System.out.println("Congrats, you can move 2 doors");
-				char selection = getUserChoice(maze);
-				maze.openDoors(selection);
-            	maze.move(selection);
-            	maze.move(selection);
+			while(cheatCounter==0) {
+				if(cheat.equals("cheat1")) {
+					maze.setLocation(maze.getRowIndex(), 3);
+					cheatCounter++;
+					//System.out.println(maze);
+				}
+				else if(cheat.equals("cheat2")) {
+					maze.setLocation(3, maze.getColIndex());
+					cheatCounter++;
+					//System.out.println(maze);
+				}
+				else if(cheat.equals("cheat3")) {
+					maze.setLocation(2, 3);
+					cheatCounter++;
+					//System.out.println(maze);
+				}
 			}
+			cheatCounter++;
 			return maze;
 		}
 		public static void help() {
@@ -241,9 +242,9 @@ public class Test implements Serializable{
 		System.out.println("Every door has random question, continue or save the progress of the game");
 		System.out.println("Make sure to save the game before leaving or your data wont be save :(");
 		System.out.println("//////////////////////////   Cheats   /////////////////////////////////////");
-		System.out.println(" Cheat 1 -------------------- PowerUp ---------------- moves 2 room");
-		System.out.println(" Cheat 2 -------------------- CheatCode -------------- moves to end of row");
-		System.out.println(" Cheat 3 -------------------- GoldenTicket ----------- moves to last room");
+		System.out.println(" Cheat 1 -------------------- LastColoumn ---------- moves to end of coloumn");
+		System.out.println(" Cheat 2 -------------------- LastRow -------------- moves to end of row");
+		System.out.println(" Cheat 3 -------------------- GoldenTicket --------- moves to last room");
 
 		}
 }
