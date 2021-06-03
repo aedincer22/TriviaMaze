@@ -1,5 +1,5 @@
 package UserInterface;
-import Question.Question;
+import Question.*;
 import Maze.Maze;
 
 import java.io.File;
@@ -26,19 +26,19 @@ public class Test implements Serializable{
 		//DO some ground work before the game
 		
 		//User chooses to play the game
-		 try
-	        {
-	            String filePath =  "Jeopardy-theme-song.wav";
-	            SimpleAudioPlayer audioPlayer = new SimpleAudioPlayer(filePath);
-	              
-	            audioPlayer.play();
-	        }
-	            catch (Exception ex) 
-	            {
-	                System.out.println("Error with playing sound.");
-	                ex.printStackTrace();
-	              
-	              }
+//		 try
+//	        {
+//	            String filePath =  "Jeopardy-theme-song.wav";
+//	            SimpleAudioPlayer audioPlayer = new SimpleAudioPlayer(filePath);
+//	              
+//	            audioPlayer.play();
+//	        }
+//	            catch (Exception ex) 
+//	            {
+//	                System.out.println("Error with playing sound.");
+//	                ex.printStackTrace();
+//	              
+//	              }
 		startGame();
 		
 	}
@@ -84,7 +84,7 @@ public class Test implements Serializable{
 			}
 			if (!maze.isCurrentRoomDoorOpen(userSelection)) {
 				//ask a question and compare answers
-				Question question = Question.createRandomQuestion();
+				Question question = QuestionFactory.createRandomQuestion();
 				System.out.println(question);
 				//get the answer
 				System.out.println(question.getMyAnswer());
@@ -103,7 +103,7 @@ public class Test implements Serializable{
 			}
 			System.out.println(maze);
 		}
-		Question.close();
+	//	Question.close();
 		if(maze.isLastRoom()) {
 			System.out.println("You Won!");
 		} else {
@@ -119,7 +119,11 @@ public class Test implements Serializable{
 		System.out.println("Please select an option: ");
 		System.out.println(" New Game (select 1)      Load Game (select 2)      Help Screen (select 3)");
 		String answer = sc.next();
-
+		while(!answer.equals("1") && !answer.equals("2") && !answer.equals("3")) {
+		System.out.println("invalid input");
+		System.out.println(" New Game (select 1)      Load Game (select 2)      Help Screen (select 3)");
+		answer = sc.next();
+		}
 		if(answer.equals("1")) {
 			//start a new game
 			Maze maze = new Maze();
@@ -223,7 +227,6 @@ public class Test implements Serializable{
 					//System.out.println(maze);
 				}
 			}
-			cheatCounter++;
 			return maze;
 		}
 		public static void help() {
