@@ -4,10 +4,6 @@ import java.util.Random;
 
 public class QuestionFactory {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
 	
 	
 	/**
@@ -27,14 +23,14 @@ public class QuestionFactory {
 	 * @return Question
 	 */
 	public static Question create(final String theQuestionType) {
-		
+		final QuestionBank questionBank = QuestionBank.getInstance();
 		final Question question;
 		if (theQuestionType.equals("MultipleChoice")) {
-			question = new MultipleChoice();
+			question = questionBank.getMultipleChoiceQuestion();
 		} else if (theQuestionType.equals("TrueOrFalse")) {
-			question = new TrueOrFalse();
+			question = questionBank.getTrueOrFalseQuestion();
 		} else if (theQuestionType.equals("OneWord")){
-			question = new OneWord();
+			question = questionBank.getOneWordQuestion();
 		} else {
 			throw new IllegalArgumentException("The type of question asked is invalid");
 		}

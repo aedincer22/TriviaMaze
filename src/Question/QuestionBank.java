@@ -17,26 +17,24 @@ import java.util.*;
  * @author Ruchik Chaudhari
  *
  */
-public class Database {
+public class QuestionBank {
 
-	private static final Statement DATABASE = createDatabase();
-	private static Database QUESTIONBANK;
-	private static List<String>MULTIPLECHOICE_QUESTIONS;
-	private static List<String>MULTIPLECHOICE_OPTIONS;
-	private static List<String>MULTIPLECHOICE_ANSWERS;
-	private static List<String>ONEWORD_QUESTIONS;
-	private static List<String>ONEWORD_ANSWERS;
-	private static List<String>TRUEORFALSE_QUESTIONS;
-	private static List<String>TRUEORFALSE_ANSWERS;
-
+	private static final Statement STATEMENT = createStatement();
+	private static final int INITIAL_QUESTION_ID = 1;
+	private static QuestionBank myQuestionBank;
+	
+	private final List<Question> multipleChoiceQuestions;
+	private final List<Question> trueOrFalseQuestions;
+	private final List<Question> oneWordQuestions;
+	private int multipleChoiceIndex = 0;
+	private int trueOrFalseIndex = 0;
+	private int oneWordIndex = 0;
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Database db = new Database();
-		System.out.println(db.getOneWordQuestions());
-		System.out.println(db.getOneWordAnwsers());
-		System.out.println(db.getTrueOrFalseQuestions());
-		System.out.println(db.getTrueOrFalseAnswers());
-		//System.out.println(MULTIPLECHOICE_QUESTIONS);
+		QuestionBank db = new QuestionBank();
+		System.out.println(db.getMultipleChoiceQuestion());
+		System.out.println(db.getMultipleChoiceQuestion());
 
 	}
 
@@ -44,16 +42,11 @@ public class Database {
 	/**
 	 * Private Constructor
 	 */
-	private Database() {
+	private QuestionBank() {
 		setup();
-		final int initialQuestionID = 1;
-		MULTIPLECHOICE_QUESTIONS = setList(initialQuestionID, "MultipleChoice", "question");
-		MULTIPLECHOICE_OPTIONS = setList(initialQuestionID, "MultipleChoice","option");
-		MULTIPLECHOICE_ANSWERS = setList(initialQuestionID, "MultipleChoice","answer");
-		ONEWORD_QUESTIONS = setList(initialQuestionID, "OneWord","question");
-		ONEWORD_ANSWERS = setList(initialQuestionID, "OneWord","answer");
-		TRUEORFALSE_QUESTIONS = setList(initialQuestionID, "TrueOrFalse", "question");
-		TRUEORFALSE_ANSWERS = setList(initialQuestionID, "TrueOrFalse", "answer");
+		multipleChoiceQuestions = setList("MultipleChoice");
+		trueOrFalseQuestions = setList("TrueOrFalse", "True or False");
+		oneWordQuestions = setList("OneWord", "");
 		close();
 	}
 
@@ -61,13 +54,13 @@ public class Database {
 	 * Returns the instance of the single Database object.
 	 * @return
 	 */
-	public static Database getInstance() {
+	public static QuestionBank getInstance() {
 
-		if (QUESTIONBANK == null) {
-			QUESTIONBANK = new Database();
-			return QUESTIONBANK;
+		if (myQuestionBank == null) {
+			myQuestionBank = new QuestionBank();
+			return myQuestionBank;
 		}
-		return QUESTIONBANK;
+		return myQuestionBank;
 	}
 
 	/**
@@ -88,12 +81,12 @@ public class Database {
 		//create new tables 
 		try {
 			//if a table exists then delete the previous one and make a new one
-			DATABASE.executeUpdate("drop table if exists OneWord");
-			DATABASE.executeUpdate("create table OneWord (id integer, question string, answer string)");
-			DATABASE.executeUpdate("drop table if exists MultipleChoice");
-			DATABASE.executeUpdate("create table MultipleChoice (id integer, question string, option string, answer string)");
-			DATABASE.executeUpdate("drop table if exists TrueOrFalse");
-			DATABASE.executeUpdate("create table TrueOrFalse (id integer, question string, answer string)");
+			STATEMENT.executeUpdate("drop table if exists OneWord");
+			STATEMENT.executeUpdate("create table OneWord (id integer, question string, answer string)");
+			STATEMENT.executeUpdate("drop table if exists MultipleChoice");
+			STATEMENT.executeUpdate("create table MultipleChoice (id integer, question string, options string, answer string)");
+			STATEMENT.executeUpdate("drop table if exists TrueOrFalse");
+			STATEMENT.executeUpdate("create table TrueOrFalse (id integer, question string, answer string)");
 		} catch (final SQLException e) {
 			System.err.println("An error occured while creating tables.");
 			e.printStackTrace();
@@ -111,7 +104,7 @@ public class Database {
 	 */
 	private void addQuestions(final String fileName, String tableName, final boolean optionsNeeded) {
 
-		int questionId = 1;
+		int questionId = INITIAL_QUESTION_ID;
 		try {
 			final File myFile = new File(fileName);
 			final Scanner myReader = new Scanner(myFile);
@@ -145,7 +138,7 @@ public class Database {
 	 */
 	private void insertQuery(final String theTableName, final String theQuery) {
 		try {
-			DATABASE.executeUpdate("insert into " + theTableName + " values" + theQuery);
+			STATEMENT.executeUpdate("insert into " + theTableName + " values" + theQuery);
 		} catch (final SQLException e) {
 			System.err.println("An error occured while inserting data into the table.");
 			e.printStackTrace();
@@ -156,9 +149,10 @@ public class Database {
 	 * Creates a connection with the database.
 	 * @return
 	 */
-	private static Statement createDatabase() {
+	private static Statement createStatement() {
 		Connection connection = null;
 		Statement statement = null;
+		
 		try {
 			//Create the database connection
 			connection = DriverManager
@@ -180,15 +174,44 @@ public class Database {
 	 * @param theFieldName
 	 * @return List<String>
 	 */
-	private List<String> setList(int theQuestionID, final String theTableName, final String theFieldName){
+	private List<Question> setList(final String theTableName){
 
-		final List<String> list = new ArrayList<>();
-		while (isEntryAvailable(theQuestionID, theTableName)) {
-			list.add(fetch(theFieldName, theQuestionID, theTableName));
-			theQuestionID++;
+		final String questionFieldName = "question";
+		final String optionsFieldName = "options";
+		final String answerFieldName = "answer";
+		int questionId = INITIAL_QUESTION_ID;
+
+		final List<Question> list = new ArrayList<>();
+		while (isEntryAvailable(questionId, theTableName)) {
+			final String question = fetch(questionId, questionFieldName, theTableName);
+			final String options = fetch(questionId, optionsFieldName, theTableName);
+			final String answer = fetch(questionId, answerFieldName, theTableName);
+			final Question multiplChoiceQuestion = new Question(question, options, answer);
+			list.add(multiplChoiceQuestion);
+			questionId++;
 		}
 		return list;
 	}
+
+
+	private List<Question> setList(final String theTableName, final String customOptions){
+
+		final String questionFieldName = "question";
+		final String answerFieldName = "answer";
+		int questionId = INITIAL_QUESTION_ID;
+
+		final List<Question> list = new ArrayList<>();
+		while (isEntryAvailable(questionId, theTableName)) {
+			final String question = fetch(questionId, questionFieldName, theTableName);
+			final String options = customOptions;
+			final String answer = fetch(questionId, answerFieldName, theTableName);
+			final Question q = new Question(question, options, answer);
+			list.add(q);
+			questionId++;
+		}
+		return list;
+	}
+
 
 	/**
 	 * Fetches the entry from the table with the given information.
@@ -197,11 +220,11 @@ public class Database {
 	 * @param theTable
 	 * @return String
 	 */
-	private String fetch(final String field, final int theQuestionID, final String theTable) {
+	private String fetch(final int theQuestionID, final String field, final String theTable) {
 
 		String result = "";
 		try {
-			final ResultSet rs = DATABASE.executeQuery
+			final ResultSet rs = STATEMENT.executeQuery
 					("select " + field + " from " + theTable + " where id = " + theQuestionID);
 			result = rs.getString(field);
 		} catch (final SQLException e) {
@@ -220,7 +243,7 @@ public class Database {
 	private boolean isEntryAvailable(final int theQuestionID, final String theTable) {
 		boolean result = true;
 		try {
-			final ResultSet rs = DATABASE.executeQuery("select * from " + theTable + " where id =" + theQuestionID);
+			final ResultSet rs = STATEMENT.executeQuery("select * from " + theTable + " where id =" + theQuestionID);
 			if (rs.next() == false) {
 				result = false;
 			}
@@ -236,7 +259,7 @@ public class Database {
 	private void close() {
 		Connection connection = null;
 		try {
-			connection = DATABASE.getConnection();
+			connection = STATEMENT.getConnection();
 			if (connection != null) {
 				connection.close();
 			}
@@ -248,53 +271,50 @@ public class Database {
 	/**
 	 * @return Return a copy of the list of multiple choice questions.
 	 */
-	public List<String> getMultipleChoiceQuestions(){
-		return new ArrayList<String>(MULTIPLECHOICE_QUESTIONS);
+	public List<Question> getMultipleChoiceQuestions(){
+		return new ArrayList<Question>(multipleChoiceQuestions);
 	}
 
 	/**
-	 * @return Return a copy of the list of multiple choice options.
+	 * @return
 	 */
-	public List<String> getMultipleChoiceOptions(){
-		return new ArrayList<String>(MULTIPLECHOICE_OPTIONS);
+	public Question getMultipleChoiceQuestion() {
+		if (multipleChoiceIndex >= multipleChoiceQuestions.size()) {
+			multipleChoiceIndex = 0;
+		}
+		return multipleChoiceQuestions.get(multipleChoiceIndex++);
 	}
-
-	/**
-	 * @return Return a copy of the list of multiple choice answers.
-	 */
-	public List<String> getMultipleChoiceAnswers(){
-		return new ArrayList<String>(MULTIPLECHOICE_ANSWERS);
-	}
-
+	
+	
 	/**
 	 * @return Return a copy of the list of one word questions.
 	 */
-	public List<String> getOneWordQuestions(){
-		return new ArrayList<String>(ONEWORD_QUESTIONS);
+	public List<Question> getOneWordQuestions(){
+		return new ArrayList<Question>(oneWordQuestions);
 	}
 
-	/**
-	 * @return Return a copy of the list of one word answers.
-	 */
-	public List<String> getOneWordAnwsers(){
-		return new ArrayList<String>(ONEWORD_ANSWERS);
+	public Question getOneWordQuestion() {
+		if (oneWordIndex >= oneWordQuestions.size()) {
+			oneWordIndex = 0;
+		}
+		return oneWordQuestions.get(oneWordIndex++);
 	}
-
+	
 	/**
 	 * @return Return a copy of the list of true or false questions.
 	 */
-	public List<String> getTrueOrFalseQuestions(){
-		return new ArrayList<String>(TRUEORFALSE_QUESTIONS);
+	public List<Question> getTrueOrFalseQuestions(){
+		return new ArrayList<Question>(trueOrFalseQuestions);
 	}
-
+	
 	/**
-	 * @return Return a copy of the list of true or false answers.
+	 * @return 
 	 */
-	public List<String> getTrueOrFalseAnswers(){
-		return new ArrayList<String>(TRUEORFALSE_ANSWERS);
+	public Question getTrueOrFalseQuestion() {
+		if (trueOrFalseIndex >= trueOrFalseQuestions.size()) {
+			trueOrFalseIndex = 0;
+		}
+		return trueOrFalseQuestions.get(trueOrFalseIndex++);
 	}
-
-
-
 
 }

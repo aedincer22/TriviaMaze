@@ -143,15 +143,16 @@ public class Maze implements Serializable {
      * @param row
      * @param col
      */
-    public void setLocation(final int row, final int col) {
+    public void setLocation(final int row, final int col, final int loc1, final int loc2) {
         final int size = myRooms.length;
         if (row >= size || col >= size || row < 0 || col < 0) {
             throw new IllegalArgumentException("Provided invalid row or column.");
         }
         myRowIndex = row;
         myColIndex = col;
+        myDisplayMaze[loc1][loc2] = 'O';
         myDisplayMaze[myRowIndex][myColIndex] = '*';  
-        myDisplayMaze[0][0] = 'X';
+       
     }
 	/**
 	 * In the maze move towards the direction
