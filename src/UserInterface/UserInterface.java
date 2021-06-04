@@ -1,9 +1,15 @@
 package UserInterface;
 import java.util.*;
 
+import Maze.Maze;
+
 public class UserInterface {
 
 	private static final Scanner SC = new Scanner (System.in);
+	private static final String MAIN_MENU_OPTION = "#"; 
+	private static final String CHEAT_ONE = "<<>>";
+	private static final String CHEAT_TWO = "++2";
+	private static final String QUIT_OPTION = "q";
 	public static void main(String[] args) {
 		//test
 		// TODO Auto-generated method stub
@@ -45,17 +51,6 @@ public class UserInterface {
 	}
 	
 	
-	/** 
-	 * Return the file name entered by the user
-	 * @return String: Filename 
-	 */
-	public static String getFileName() {
-		//System.out.print("Press Q to quit or ");
-		System.out.println("Please enter the name of the file to be opened: ");
-		final String filename = SC.nextLine();
-		return filename;
-	}
-	
 	/**
 	 * Print the main menu.
 	 */
@@ -87,6 +82,77 @@ public class UserInterface {
 	}
 	
 	/**
+	 * Prints the state of the maze and the current user.
+	 * @param maze
+	 */
+	public static void printTheCurrentMazeInfo(final Maze maze) {
+		System.out.println(maze);
+		System.out.println("You are curently in " + maze.getRowIndex() + " row and "
+				+ maze.getColIndex()+" column." );	
+		System.out.println("Please select one of the given door(s):");
+		System.out.println(maze.getCurrentAvailableDoors());
+	}
+	
+	
+	/**
+	 * Returns a valid input from the user.
+	 * A user can enter either a given direction or can
+	 * choose to quit the game or choose main menu or 
+	 * can use one of the valid cheats.
+	 * @param maze
+	 * @return String: User input
+	 */
+	public static String getUserDirection(final Maze maze) {
+		final Set<String> availableChoices = new HashSet<>();
+		for (char ch : maze.getCurrentAvailableDoors()) {
+			//convert the character to string
+			availableChoices.add("" + ch);
+		}
+		availableChoices.add(MAIN_MENU_OPTION);
+		availableChoices.add(QUIT_OPTION);
+		availableChoices.add(CHEAT_ONE);
+		availableChoices.add(CHEAT_TWO);
+		
+		String directionInput = SC.nextLine();
+		while(!availableChoices.contains(directionInput)) {
+			System.out.println("Invalid input, try again!");
+			directionInput = SC.nextLine();
+		}
+		return directionInput;
+	}
+	
+	/**
+	 * Returns an Answer from the user
+	 * @return String: Answer
+	 */
+	public static String getUserAnswer() {
+		final String answer = SC.nextLine();
+		return answer;
+	}
+	/** 
+	 * Return the file name entered by the user
+	 * @return String: Filename 
+	 */
+	public static String getFileName() {
+		//System.out.print("Press Q to quit or ");
+		System.out.println("Please enter the name of the file to be opened: ");
+		final String filename = SC.nextLine();
+		return filename;
+	}
+	
+	/**
+	 * Prints the final verdict of the game.
+	 * @param result
+	 */
+	public static void printResult(final boolean result) {
+		if (result) {
+			System.out.println("You Won!!");
+		} else {
+			System.out.println("You Lost!!");
+		}
+	}
+	
+	/**
 	 * Prints the help screen.
 	 */
 	public static void printHelpScreen() {
@@ -106,5 +172,6 @@ public class UserInterface {
 		System.out.println("Make sure to save the game before leaving or your data wont be save :(");
 		System.out.println("//////////////////////////   Cheats   /////////////////////////////////////");
 		System.out.println(" Cheat -------------------- Lastroom --------- moves to last room");
+		System.out.println();
 	}
 }
