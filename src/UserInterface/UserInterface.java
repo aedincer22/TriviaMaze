@@ -6,10 +6,10 @@ import Maze.Maze;
 public class UserInterface {
 
 	private static final Scanner SC = new Scanner (System.in);
-	private static final String MAIN_MENU_OPTION = "#"; 
-	private static final String CHEAT_ONE = "<<>>";
-	private static final String CHEAT_TWO = "++2";
-	private static final String QUIT_OPTION = "q";
+	private static final char MAIN_MENU_OPTION = '+'; 
+	private static final char  CHEAT_ONE = '#';
+	private static final char CHEAT_TWO = '?';
+	private static final char QUIT_OPTION = 'Q';
 	public static void main(String[] args) {
 		//test
 		// TODO Auto-generated method stub
@@ -102,21 +102,21 @@ public class UserInterface {
 	 * @param maze
 	 * @return String: User input
 	 */
-	public static String getUserDirection(final Maze maze) {
-		final Set<String> availableChoices = new HashSet<>();
+	public static char getUserDirection(final Maze maze) {
+		final Set<Character> availableChoices = new HashSet<>();
 		for (char ch : maze.getCurrentAvailableDoors()) {
 			//convert the character to string
-			availableChoices.add("" + ch);
+			availableChoices.add(ch);
 		}
 		availableChoices.add(MAIN_MENU_OPTION);
 		availableChoices.add(QUIT_OPTION);
 		availableChoices.add(CHEAT_ONE);
 		availableChoices.add(CHEAT_TWO);
 		
-		String directionInput = SC.nextLine();
+		char directionInput = Character.toUpperCase(SC.next().charAt(0));
 		while(!availableChoices.contains(directionInput)) {
 			System.out.println("Invalid input, try again!");
-			directionInput = SC.nextLine();
+			directionInput = SC.next().charAt(0);
 		}
 		return directionInput;
 	}

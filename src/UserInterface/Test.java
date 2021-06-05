@@ -2,7 +2,6 @@ package UserInterface;
 import Question.*;
 import Maze.Maze;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,8 +16,8 @@ public class Test implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	static Scanner sc  = new Scanner(System.in);
-	static int cheatCounter;
-	
+	static int moveCounter;
+	//static UserInterface user = new UserInterface();
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
@@ -41,53 +40,48 @@ public class Test implements Serializable{
 		startGame();
 		
 	}
-	
 	public static char getUserChoice(Maze maze) {
 		//print the details
-		System.out.println("You are curently in " + maze.getRowIndex() + " row and "
-				+ maze.getColIndex()+" column." );	
-		System.out.println("Please select one of the given door(s):");
-		Set<Character> availableChoices = maze.getCurrentAvailableDoors();
-		System.out.println(availableChoices);		
+		UserInterface.printTheCurrentMazeInfo(maze);		
 		//get a valid input from the user
-		char userChoice = Character.toUpperCase(sc.next().charAt(0));
-		
-		while (userChoice != 'Q' && !availableChoices.contains(userChoice) && userChoice != '*' && userChoice != 'C') {
-			System.out.println("Invalid Input, please try again or press 'Q' to Quit");
-			System.out.println("Please select one of the given door(s):");
-			System.out.println(availableChoices);
-			userChoice = Character.toUpperCase(sc.next().charAt(0));
-		}
+		char userChoice = UserInterface.getUserDirection(maze);
+			
 		return userChoice;
 	}
 
 	public static void newGame(Maze maze) {
-		System.out.println(maze);
+		moveCounter = 0;
 		while (!maze.isLastRoom() && !maze.isCurrentRoomLocked()) {
+			if(moveCounter == 15) break;
+			if(moveCounter == 10) {
+				System.out.println("!!!!!Warning!!!!!");
+				System.out.println("5 moves left");
+				System.out.println();
+			}
 			char userSelection = getUserChoice(maze);
 			if (userSelection == 'Q') break;
-			if(userSelection == '*' ) {
+			if(userSelection == '+' ) {
 				if(menu(maze) == false) break;
-					System.out.println(maze);
 					userSelection = getUserChoice(maze);
 			}		
-			if(userSelection == 'C') {
-				cheats(maze);
-				System.out.println(maze);
+			if(userSelection == '#') {
+				cheat1(maze);
+				userSelection = getUserChoice(maze);
+			}
+			if(userSelection == '?') {
+				cheat2();
 				userSelection = getUserChoice(maze);
 			}
 			if (!maze.isCurrentRoomDoorOpen(userSelection)) {
 				//ask a question and compare answers
 				Question question = QuestionFactory.createRandomQuestion();
 				if (userSelection == 'Q') break;
-				if(userSelection == '*' ) {
+				if(userSelection == '+' ) {
 					if(menu(maze) == false) break;
-						System.out.println(maze);
 						userSelection = getUserChoice(maze);
 				}	
-				if(userSelection == 'C') {
-					cheats(maze);
-					System.out.println(maze);
+				if(userSelection == '#') {
+					cheat1(maze);
 					userSelection = getUserChoice(maze);
 				}
 				System.out.println(question);
@@ -98,6 +92,7 @@ public class Test implements Serializable{
 				if (userAnswer.equals(question.getAnswer().toLowerCase())) {
 					maze.openDoors(userSelection);
 					maze.move(userSelection);
+					moveCounter++;
 				}
 				else {
 					maze.deleteCurrentRoomDoor(userSelection);
@@ -105,43 +100,34 @@ public class Test implements Serializable{
 				
 			} else {
 				maze.move(userSelection);
+				moveCounter++;
 			}
-			System.out.println(maze);
+			//System.out.println(maze);
 		}
-		if(maze.isLastRoom()) {
-			System.out.println("You Won!");
-		} else {
-			System.out.println("You Lost!");
-		}
+		UserInterface.printResult(maze.isLastRoom());
 	}
 
 	public static void startGame() {
-		System.out.println("Welcome User to the TRIVIA MAZE!");
-		System.out.println("Press '*' for menu screen in Game");
-		System.out.println();
-		System.out.println("Please select an option: ");
-		System.out.println(" New Game (select 1)      Load Game (select 2)      Help Screen (select 3)");
-		String answer = sc.next();
-		while(!answer.equals("1") && !answer.equals("2") && !answer.equals("3")) {
-			System.out.println("invalid input");
-			System.out.println(" New Game (select 1)      Load Game (select 2)      Help Screen (select 3)");
-			answer = sc.next();
-		}
-		if(answer.equals("1")) {
+		UserInterface.printHomePage();
+
+		if(UserInterface.getInputFromHomePage().equals("1")) {
 			//start a new game
 			Maze maze = new Maze();
 			System.out.println("New Game has been selected");
 			newGame(maze);
 		}
-		else if (answer.equals("2")) {
+		else if (UserInterface.getInputFromHomePage().contentEquals("2")) {
 			//Load game
 			System.out.println("Loading prevoius Game");
 			newGame(loadGame());
 		}
-		else if(answer.equals("3")) {
+		else if(UserInterface.getInputFromHomePage().equals("3")) {
 			//open Help Screen
-			help();
+			UserInterface.printHelpScreen();
 			startGame();
+		}
+		else if(UserInterface.getInputFromHomePage().equals("4")) {
+			//open Help Screen
 		}
 		else {
 			System.out.println("You have enter invalid input.");
@@ -149,10 +135,8 @@ public class Test implements Serializable{
 	}
 
 	public static void saveGame(Maze maze) {
-		System.out.println("Name for the file to be save: ");
-		String filename = sc.next();
 		try {
-			FileOutputStream fileOut =	new FileOutputStream(filename+ ".ser");
+			FileOutputStream fileOut =	new FileOutputStream(UserInterface.getFileName() + ".ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(maze);
 			out.close();
@@ -164,11 +148,9 @@ public class Test implements Serializable{
 	}	
 
 	public static Maze loadGame() {
-		System.out.println("Name for the file to open: ");
-		String filename = sc.next();
 		Maze maze = null;
 		try {
-			FileInputStream fileIn = new FileInputStream(filename+ ".ser");
+			FileInputStream fileIn = new FileInputStream(UserInterface.getFileName()+ ".ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			maze = (Maze) in.readObject();
 			in.close();
@@ -185,55 +167,37 @@ public class Test implements Serializable{
 	}
 		
 	public static boolean menu(Maze maze) {
-		String option;
-		System.out.println("Menu Screen");
-		System.out.println("Save Game (1)   return to Start Screen (2)   Exit Game(3)");
-		option = sc.next();
-		while(!option.equals("1") && !option.equals("2") && !option.equals("3")) {
-			System.out.println("invalid input");
-			System.out.println("Save Game (1)   return to Start Screen (2)   Exit Game(3)");
-			option = sc.next();	
-		}	
-		if(option.equals("1")) {
+		UserInterface.printMainMenu();
+		
+		if(UserInterface.getInputFromMainMenu().equals("1")) {
 			saveGame(maze);
 			return true;
 		}
-		else if(option.equals("2")) {
+		else if(UserInterface.getInputFromMainMenu().equals("2")) {
 			startGame();
 			return true;
 		}
-		else if(option.equals("3")) {
+		else if(UserInterface.getInputFromMainMenu().equals("3")) {
+			return true;
+		}
+		else if(UserInterface.getInputFromMainMenu().equals("4")) {
+			UserInterface.printHelpScreen();
+		}
+		else {
 			return false;
 		}
 		return true;
 	}
 		
-	public static Maze cheats(Maze maze) {
-		System.out.println("Hmmm.... I hear you Something up yourselves?");
-		String cheat = sc.next();
-			 if(cheat.equals("lastRoom")) {
-				maze.setLocation(2, 3,maze.getRowIndex(), maze.getColIndex());
-				//System.out.println(maze);
-			}
+	public static Maze cheat1(Maze maze) {
+		System.out.println("Cheat has been activated, last room granted");
+		maze.setLocation(2, 3,maze.getRowIndex(), maze.getColIndex());
 		return maze;
 	}
-		
-	public static void help() {
-		System.out.println("Welcome to the Help Screen!");
-		System.out.println("//////////////////////////Intro to Trivia MAZE//////////////////////////////");
-		System.out.println("Hello new User, if you are reading this you selected the help option");
-		System.out.println("In order to win the game, pass through each room and find the exit...");
-		System.out.println("However each door is locked in order to open them you must answer each");
-		System.out.println("question correctly. The question vary from multiple choice,true/false ");
-		System.out.println("and fill in the blanks. you will have two chance in each room to answer");
-		System.out.println("the question correctly, otherwise the room locks permanetly and game Over.");
-		System.out.println();
-		System.out.println("////////////////////////////How to play/////////////////////////////////////");
-		System.out.println("select new game or load game, once selected follow the prompts inorder");
-		System.out.println("to complete the maze. chose between South door or East door in each room");
-		System.out.println("Every door has random question, continue or save the progress of the game");
-		System.out.println("Make sure to save the game before leaving or your data wont be save :(");
-		System.out.println("//////////////////////////   Cheats   /////////////////////////////////////");
-		System.out.println(" Cheat -------------------- Lastroom --------- moves to last room");
+	public static void cheat2() {
+		System.out.println("Cheat has been activated, +2 moves will be awarded");
+		moveCounter--;
+		moveCounter--;
 	}
+
 }
