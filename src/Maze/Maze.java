@@ -150,7 +150,7 @@ public class Maze implements Serializable {
         }
         myRowIndex = row;
         myColIndex = col;
-        myDisplayMaze[loc1][loc2] = 'O';
+        myDisplayMaze[loc1][loc2] = 'X';
         myDisplayMaze[myRowIndex][myColIndex] = '*';  
        
     }
