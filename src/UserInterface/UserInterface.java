@@ -10,13 +10,14 @@ public class UserInterface {
 	private static final char  CHEAT_ONE = '#';
 	private static final char CHEAT_TWO = '?';
 	private static final char QUIT_OPTION = 'Q';
+	
 	public static void main(String[] args) {
 		//test
 		// TODO Auto-generated method stub
 		printMainMenu();
-		String input = getInputFromMainMenu();
+		String input = getInputFromHomePage();
 		System.out.println(input);
-
+		
 	}
 
 	/**

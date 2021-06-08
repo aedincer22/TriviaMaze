@@ -109,24 +109,25 @@ public class Test implements Serializable{
 
 	public static void startGame() {
 		UserInterface.printHomePage();
-
-		if(UserInterface.getInputFromHomePage().equals("1")) {
+		final String homePageInput = UserInterface.getInputFromHomePage();
+		
+		if(homePageInput.equals("1")) {
 			//start a new game
 			Maze maze = new Maze();
 			System.out.println("New Game has been selected");
 			newGame(maze);
 		}
-		else if (UserInterface.getInputFromHomePage().contentEquals("2")) {
+		else if (homePageInput.equals("2")) {
 			//Load game
 			System.out.println("Loading prevoius Game");
 			newGame(loadGame());
 		}
-		else if(UserInterface.getInputFromHomePage().equals("3")) {
+		else if(homePageInput.equals("3")) {
 			//open Help Screen
 			UserInterface.printHelpScreen();
 			startGame();
 		}
-		else if(UserInterface.getInputFromHomePage().equals("4")) {
+		else if(homePageInput.equals("4")) {
 			//open Help Screen
 		}
 		else {
