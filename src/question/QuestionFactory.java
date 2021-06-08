@@ -4,13 +4,13 @@
  * 06/06/2021
  */
 
-package question;
+package Question;
 
 import java.util.Random;
 
 /**
  * QuestionFactory creates question based on the needs. A user can either pass
- * in specifically or just use a (random) method to create a Question.
+ * in specifically or just use a (random) method to create a question.
  * 
  * @author Ruchik Chaudhari, Shirwa Ahmed, and Yongzhao Ye
  * @version Spring 2021
@@ -27,7 +27,7 @@ public class QuestionFactory {
 	/**
 	 * Makes a random decision on which type of question needs to be created.
 	 * 
-	 * @return Question
+	 * @return question
 	 */
 	public static Question createRandomQuestion() {
 		final Random rand = new Random();
@@ -48,7 +48,7 @@ public class QuestionFactory {
 	 * Creates a type of question based on the argument passed.
 	 * 
 	 * @param theQuestionType
-	 * @return Question
+	 * @return question
 	 */
 	public static Question create(final String theQuestionType) {
 		final QuestionBank questionBank = QuestionBank.getInstance();

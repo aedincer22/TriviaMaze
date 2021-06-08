@@ -1,14 +1,14 @@
 /*
- * Question Class
+ * question Class
  * Version Spring 2021
  * 06/06/2021
  */
-package question;
+package Question;
 
 import java.util.*;
 
 /**
- * Question class creates instances which holds, question, options and answer.
+ * question class creates instances which holds, question, options and answer.
  * 
  * @author Ruchik Chaudhari, Shirwa Ahmed, and Yongzhao Ye
  * @version Spring 2021
@@ -49,7 +49,7 @@ public class Question {
 	}
 
 	/**
-	 * @return Question.
+	 * @return question.
 	 */
 	public String getQuestion() {
 		return myQuestion;
@@ -70,7 +70,7 @@ public class Question {
 	}
 
 	/**
-	 * @return The string format of Question Class.
+	 * @return The string format of question Class.
 	 */
 	@Override
 	public String toString() {

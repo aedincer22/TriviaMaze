@@ -11,11 +11,7 @@ public class UserInterface {
 	private static final char CHEAT_ONE = '#';
 	private static final char CHEAT_TWO = '?';
 	private static final char QUIT_OPTION = 'Q';
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 2a6505307658b53d431616beb351423eb9b7d583
 	public static void main(String[] args) {
 		// test
 		// TODO Auto-generated method stub
@@ -134,7 +130,7 @@ public class UserInterface {
 	 * @return String: Answer
 	 */
 	public static String getUserAnswer() {
-		final String answer = SC.next();
+		final String answer = SC.nextLine();
 		return answer;
 	}
 

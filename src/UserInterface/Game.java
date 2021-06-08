@@ -1,11 +1,8 @@
 package UserInterface;
-<<<<<<< HEAD:src/UserInterface/Test.java
-=======
 
-import Question.*;
->>>>>>> 2a6505307658b53d431616beb351423eb9b7d583:src/UserInterface/Game.java
 import Maze.Maze;
-import question.*;
+//import question.*;
+import Question.*;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -108,7 +105,6 @@ public class Game implements Serializable {
 	public static void startGame() {
 		UserInterface.printHomePage();
 		final String homePageInput = UserInterface.getInputFromHomePage();
-<<<<<<< HEAD:src/UserInterface/Test.java
 		
 		if(homePageInput.equals("1")) {
 			//start a new game
@@ -130,25 +126,6 @@ public class Game implements Serializable {
 			//open Help Screen
 		}
 		else {
-=======
-
-		if (homePageInput.equals("1")) {
-			// start a new game
-			Maze maze = new Maze();
-			System.out.println("New Game has been selected");
-			newGame(maze);
-		} else if (homePageInput.equals("2")) {
-			// Load game
-			System.out.println("Loading prevoius Game");
-			newGame(loadGame());
-		} else if (homePageInput.equals("3")) {
-			// open Help Screen
-			UserInterface.printHelpScreen();
-			startGame();
-		} else if (homePageInput.equals("4")) {
-			// open Help Screen
-		} else {
->>>>>>> 2a6505307658b53d431616beb351423eb9b7d583:src/UserInterface/Game.java
 			System.out.println("You have enter invalid input.");
 		}
 	}
