@@ -3,7 +3,7 @@
  * Version Spring 2021
  * 06/07/2021
  */
-package question;
+package Question;
 
 import static org.junit.Assert.*;
 

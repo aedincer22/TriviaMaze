@@ -1,3 +1,8 @@
+/*
+ * UserInterface Class
+ * Version Spring 2021
+ * 06/08/2021 
+ */
 package UserInterface;
 
 import java.util.*;
@@ -12,14 +17,6 @@ public class UserInterface {
 	private static final char CHEAT_TWO = '?';
 	private static final char QUIT_OPTION = 'Q';
 
-	public static void main(String[] args) {
-		// test
-		// TODO Auto-generated method stub
-		printMainMenu();
-		String input = getInputFromHomePage();
-		System.out.println(input);
-		
-	}
 
 	/**
 	 * Prints the home page for the Trivia Maze.
@@ -125,14 +122,15 @@ public class UserInterface {
 	}
 
 	/**
-	 * Returns an Answer from the user
-	 * 
-	 * @return String: Answer
-	 */
-	public static String getUserAnswer() {
-		final String answer = SC.nextLine();
-		return answer;
-	}
+     * Returns an Answer from the user
+     * 
+     * @return String: Answer
+     */
+    public static String getUserAnswer() {
+        System.out.println("Your Answer:");
+        final String answer = SC.next();
+        return answer.toLowerCase();
+    }
 
 	/**
 	 * Return the file name entered by the user

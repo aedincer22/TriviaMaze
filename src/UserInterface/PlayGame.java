@@ -1,3 +1,8 @@
+/*
+ * PlayGame Class
+ * Version Spring 2021
+ * 06/08/2021 
+ */
 package UserInterface;
 
 public class PlayGame {
@@ -7,15 +12,15 @@ public class PlayGame {
 		// DO some ground work before the game
 
 		// User chooses to play the game
-		try {
-			String filePath = "Jeopardy-theme-song.wav";
-			SimpleAudioPlayer audioPlayer = new SimpleAudioPlayer(filePath);
-
-			audioPlayer.play();
-		} catch (Exception ex) {
-			System.out.println("Error with playing sound.");
-			ex.printStackTrace();
-		}
+//		try {
+//			String filePath = "Jeopardy-theme-song.wav";
+//			SimpleAudioPlayer audioPlayer = new SimpleAudioPlayer(filePath);
+//
+//			audioPlayer.play();
+//		} catch (Exception ex) {
+//			System.out.println("Error with playing sound.");
+//			ex.printStackTrace();
+//		}
 		Game.startGame();
 	}
 }

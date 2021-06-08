@@ -1,3 +1,8 @@
+/*
+ * Game Class
+ * Version Spring 2021
+ * 06/08/2021 
+ */
 package UserInterface;
 
 import Maze.Maze;
@@ -72,6 +77,7 @@ public class Game implements Serializable {
 					userSelection = getUserChoice(maze);
 				}
 			}
+			// checks if user select menu or cheats, breaks if user enters quit game
 			if (answer == 5)
 				break;
 			if (!maze.isCurrentRoomDoorOpen(userSelection)) {
@@ -81,6 +87,41 @@ public class Game implements Serializable {
 				// get the answer
 				System.out.println(question.getAnswer());
 				String userAnswer = UserInterface.getUserAnswer();
+				// check to see if user answer menu or cheat as answer
+				while (userAnswer.equals("+") || userAnswer.equals("?")) {
+
+					if (userAnswer.equals("+")) {
+						if (menu(maze) == false) {
+							answer = 5;
+							break;
+						}
+						System.out.println(maze);
+						System.out.println(question);
+						// get the answer
+						System.out.println(question.getAnswer());
+						userAnswer = UserInterface.getUserAnswer();
+					}
+
+					if (userAnswer.equals("?")) {
+						cheat2();
+						System.out.println(maze);
+						System.out.println(question);
+						// get the answer
+						System.out.println(question.getAnswer());
+						userAnswer = UserInterface.getUserAnswer();
+					}
+				}
+				// check to see if user enters cheat as answer
+				if (userAnswer.equals("#")) {
+					cheat1(maze);
+					userSelection = getUserChoice(maze);
+					System.out.println(question);
+					// get the answer
+					System.out.println(question.getAnswer());
+					userAnswer = UserInterface.getUserAnswer();
+				}
+				if (answer == 5)
+					break;
 				// if answer is true then move to the next room
 				if (userAnswer.equals(question.getAnswer().toLowerCase())) {
 					maze.openDoors(userSelection);
@@ -105,27 +146,23 @@ public class Game implements Serializable {
 	public static void startGame() {
 		UserInterface.printHomePage();
 		final String homePageInput = UserInterface.getInputFromHomePage();
-		
-		if(homePageInput.equals("1")) {
-			//start a new game
+
+		if (homePageInput.equals("1")) {
+			// start a new game
 			Maze maze = new Maze();
 			System.out.println("New Game has been selected");
 			newGame(maze);
-		}
-		else if (homePageInput.equals("2")) {
-			//Load game
+		} else if (homePageInput.equals("2")) {
+			// Load game
 			System.out.println("Loading prevoius Game");
 			newGame(loadGame());
-		}
-		else if(homePageInput.equals("3")) {
-			//open Help Screen
+		} else if (homePageInput.equals("3")) {
+			// open Help Screen
 			UserInterface.printHelpScreen();
 			startGame();
-		}
-		else if(homePageInput.equals("4")) {
-			//open Help Screen
-		}
-		else {
+		} else if (homePageInput.equals("4")) {
+			// open Help Screen
+		} else {
 			System.out.println("You have enter invalid input.");
 		}
 	}
