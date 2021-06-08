@@ -1,17 +1,19 @@
 package UserInterface;
+
 import java.util.*;
 
 import Maze.Maze;
 
 public class UserInterface {
 
-	private static final Scanner SC = new Scanner (System.in);
-	private static final char MAIN_MENU_OPTION = '+'; 
-	private static final char  CHEAT_ONE = '#';
+	private static final Scanner SC = new Scanner(System.in);
+	private static final char MAIN_MENU_OPTION = '+';
+	private static final char CHEAT_ONE = '#';
 	private static final char CHEAT_TWO = '?';
 	private static final char QUIT_OPTION = 'Q';
+
 	public static void main(String[] args) {
-		//test
+		// test
 		// TODO Auto-generated method stub
 		printMainMenu();
 		String input = getInputFromMainMenu();
@@ -31,26 +33,27 @@ public class UserInterface {
 		System.out.println("'*' represents the room you are in.");
 		System.out.println();
 		System.out.println("Please select an option: ");
-		System.out.println(" New Game (select 1)      Load Game (select 2)      Help Screen (select 3)      Quit(select 4)");
+		System.out.println(
+				" New Game (select 1)      Load Game (select 2)      Help Screen (select 3)      Quit(select 4)");
 	}
-	
+
 	/**
-	 * Gets the valid user input when the user is on "Home Page."
-	 * Valid inputs at home page are --> [1,2,3,4] 
+	 * Gets the valid user input when the user is on "Home Page." Valid inputs at
+	 * home page are --> [1,2,3,4]
+	 * 
 	 * @return String: user input
 	 */
 	public static String getInputFromHomePage() {
-		String homePageInput = SC.nextLine();
+		String homePageInput = SC.next();
 		final Set<String> homePageChoices = new HashSet<>(Arrays.asList("1", "2", "3", "4"));
-		
-		while(!homePageChoices.contains(homePageInput)) {
+
+		while (!homePageChoices.contains(homePageInput)) {
 			System.out.println("Invalid input, try again.");
-			homePageInput = SC.nextLine();
+			homePageInput = SC.next();
 		}
 		return homePageInput;
 	}
-	
-	
+
 	/**
 	 * Print the main menu.
 	 */
@@ -63,85 +66,89 @@ public class UserInterface {
 		System.out.println("Quit Game (select 5)");
 		System.out.println("-----------------------------");
 	}
-	
-	
+
 	/**
-	 * Get a valid input from the main menu.
-	 * Currently the valid inputs are --> [1,2,3,4,5]
+	 * Get a valid input from the main menu. Currently the valid inputs are -->
+	 * [1,2,3,4,5]
+	 * 
 	 * @return String: user input
 	 */
 	public static String getInputFromMainMenu() {
-		String mainMenuInput = SC.nextLine();
+		String mainMenuInput = SC.next();
+		// System.out.println(mainMenuInput);
 		final Set<String> mainMenuChoices = new HashSet<>(Arrays.asList("1", "2", "3", "4", "5"));
-		
-		while(!mainMenuChoices.contains(mainMenuInput)) {
+
+		while (!mainMenuChoices.contains(mainMenuInput)) {
 			System.out.println("Invalid input, try again.");
-			mainMenuInput = SC.nextLine();
+			mainMenuInput = SC.next();
 		}
 		return mainMenuInput;
 	}
-	
+
 	/**
 	 * Prints the state of the maze and the current user.
+	 * 
 	 * @param maze
 	 */
 	public static void printTheCurrentMazeInfo(final Maze maze) {
 		System.out.println(maze);
-		System.out.println("You are curently in " + maze.getRowIndex() + " row and "
-				+ maze.getColIndex()+" column." );	
+		System.out.println("You are curently in " + maze.getRowIndex() + " row and " + maze.getColIndex() + " column.");
 		System.out.println("Please select one of the given door(s):");
 		System.out.println(maze.getCurrentAvailableDoors());
 	}
-	
-	
+
 	/**
-	 * Returns a valid input from the user.
-	 * A user can enter either a given direction or can
-	 * choose to quit the game or choose main menu or 
-	 * can use one of the valid cheats.
+	 * Returns a valid input from the user. A user can enter either a given
+	 * direction or can choose to quit the game or choose main menu or can use one
+	 * of the valid cheats.
+	 * 
 	 * @param maze
 	 * @return String: User input
 	 */
 	public static char getUserDirection(final Maze maze) {
 		final Set<Character> availableChoices = new HashSet<>();
 		for (char ch : maze.getCurrentAvailableDoors()) {
-			//convert the character to string
+			// convert the character to string
 			availableChoices.add(ch);
 		}
 		availableChoices.add(MAIN_MENU_OPTION);
 		availableChoices.add(QUIT_OPTION);
 		availableChoices.add(CHEAT_ONE);
 		availableChoices.add(CHEAT_TWO);
-		
+
 		char directionInput = Character.toUpperCase(SC.next().charAt(0));
-		while(!availableChoices.contains(directionInput)) {
+		while (!availableChoices.contains(directionInput)) {
 			System.out.println("Invalid input, try again!");
-			directionInput = SC.next().charAt(0);
+			directionInput = Character.toUpperCase(SC.next().charAt(0));
 		}
 		return directionInput;
 	}
-	
+
 	/**
 	 * Returns an Answer from the user
+	 * 
 	 * @return String: Answer
 	 */
 	public static String getUserAnswer() {
-		final String answer = SC.nextLine();
+		final String answer = SC.next();
 		return answer;
 	}
-	/** 
+
+	/**
 	 * Return the file name entered by the user
-	 * @return String: Filename 
+	 * 
+	 * @return String: Filename
 	 */
 	public static String getFileName() {
-		//System.out.print("Press Q to quit or ");
-		System.out.println("Please enter the name of the file to be opened: ");
-		final String filename = SC.nextLine();
+		// System.out.print("Press Q to quit or ");
+		System.out.println("Please enter the name of the file: ");
+		final String filename = SC.next();
 		return filename;
 	}
-	
+
 	/**
 	 * Prints the final verdict of the game.
+	 * 
 	 * @param result
 	 */
 	public static void printResult(final boolean result) {
@@ -151,7 +158,7 @@ public class UserInterface {
 			System.out.println("You Lost!!");
 		}
 	}
-	
+
 	/**
 	 * Prints the help screen.
 	 */
@@ -170,8 +177,11 @@ public class UserInterface {
 		System.out.println("to complete the maze. chose between South door or East door in each room");
 		System.out.println("Every door has random question, continue or save the progress of the game");
 		System.out.println("Make sure to save the game before leaving or your data wont be save :(");
+		System.out.println();
 		System.out.println("//////////////////////////   Cheats   /////////////////////////////////////");
 		System.out.println(" Cheat -------------------- Lastroom --------- moves to last room");
+		System.out.println(" Cheat -------------------- Extra Moves ------ 2 moves added");
+
 		System.out.println();
 	}
 }
