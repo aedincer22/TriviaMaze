@@ -1,6 +1,6 @@
 package UserInterface;
-import Question.*;
 import Maze.Maze;
+import question.*;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
